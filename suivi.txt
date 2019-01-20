@@ -2,4 +2,4 @@
 - Bateau: Box avec largeur longueur et hauteur --> constructeur modifié également now. --> BateauFeatures
 - Drone <-> Navire : indiquer rayon et longueur
 - Artefact -> crééer plusieurs packages ou créer juste différents types ?
-test de Huseyin
+- ScenarioInstanceBE : La positon du bateau est cractérisé par son centre géométrique. Il est au centre pour (0,0,h/2) ici la valeur de h vaut 2
