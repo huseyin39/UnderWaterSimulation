@@ -74,8 +74,18 @@ public class Artefact extends SimEntity implements IMovable,IArtefactRepresentat
 	}
 
 	@Override
-	public double getSize() {
-		return ((ArtefactFeatures) getFeatures()).getTaille();
+	public double getSize1() {
+		return ((ArtefactFeatures) getFeatures()).getTaille1();
+	}
+	
+	@Override
+	public double getSize2() {
+		return ((ArtefactFeatures) getFeatures()).getTaille2();
+	}
+	
+	@Override
+	public double getSize3() {
+		return ((ArtefactFeatures) getFeatures()).getTaille3();
 	}
 	
 	@Override

@@ -22,8 +22,8 @@ public class EntityDrone3DRepresentation extends Representation3D {
 		super(settings);
 	}
 
-	EntityDrone3DRepresentationInterface Navire3D;
-	Group bateau;
+	EntityDrone3DRepresentationInterface Drone3D;
+	Group drone;
 	int r1=3;
 	int h=5;
 	
@@ -32,23 +32,23 @@ public class EntityDrone3DRepresentation extends Representation3D {
 
 	@Override
 	public void init(Group world, Object obj) {
-		Navire3D = (EntityDrone3DRepresentationInterface) obj;
-	    bateau = new Group();
+		Drone3D = (EntityDrone3DRepresentationInterface) obj;
+	    drone = new Group();
 	    
 	    
-	    PhongMaterial material = new PhongMaterial(Navire3D.getColor());
+	    PhongMaterial material = new PhongMaterial(Drone3D.getColor());
 
 	    Cylinder cy = new Cylinder(r1, h*2);
 	    cy.setMaterial(material);
 	    cy.setRotationAxis(Rotate.Z_AXIS);
 	    cy.setRotate(90.0);
 	    cy.setTranslateX(-h/2);
-	    bateau.getChildren().add(cy);
+	    drone.getChildren().add(cy);
 
 	    Sphere s = new Sphere(r1);
 	    s.setMaterial(material);
 	    s.setTranslateX(h/2);
-	    bateau.getChildren().add(s);
+	    drone.getChildren().add(s);
 	    
 	    double c = r1;
 	    Box b = new Box(c,c,c);
@@ -56,23 +56,23 @@ public class EntityDrone3DRepresentation extends Representation3D {
 	    b.setMaterial(material);
 	    b.setTranslateZ(r1);
 	    b.setTranslateX(h/2-c);
-	    bateau.getChildren().add(b);
-		world.getChildren().add(bateau);
+	    drone.getChildren().add(b);
+		world.getChildren().add(drone);
 
 	}
 
 	@Override
 	public void update() {
-		Point3D p = Navire3D.getPosition();
+		Point3D p = Drone3D.getPosition();
 
-		bateau.setTranslateX(p.getX());
-		bateau.setTranslateY(p.getY());
-		bateau.setTranslateZ(p.getZ());
+		drone.setTranslateX(p.getX());
+		drone.setTranslateY(p.getY());
+		drone.setTranslateZ(p.getZ());
 		
-		Point3D rot = Navire3D.getRotationXYZ();
+		Point3D rot = Drone3D.getRotationXYZ();
 		
 		Affine a = XYZRotator2.getTransformByAngle(rot);
-		bateau.getTransforms().setAll(a);
+		drone.getTransforms().setAll(a);
 
 	}
 
