@@ -2,3 +2,4 @@
 - Bateau: Box avec largeur longueur et hauteur --> constructeur modifié également now. --> BateauFeatures
 - Drone <-> Navire : indiquer rayon et longueur
 - Artefact -> crééer plusieurs packages ou créer juste différents types ?
+test
