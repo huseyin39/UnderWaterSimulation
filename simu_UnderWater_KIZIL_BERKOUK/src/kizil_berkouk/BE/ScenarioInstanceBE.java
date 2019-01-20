@@ -30,13 +30,20 @@ public class ScenarioInstanceBE implements IScenarioInstance {
 		ScenarioFeatures kizil_berkouksf = new ScenarioFeatures("kizil_berkoukSF");
 		
 		HashMap<String,Point3D> positionsCles = new HashMap<String, Point3D>();
+		positionsCles.put("start", new Point3D(0,0,0));
+		positionsCles.put("PointCible1", new Point3D(10,10,0));
+		positionsCles.put("PointCible2", new Point3D(30,-10,0));
+		positionsCles.put("PointCible3", new Point3D(20,0,0));
+		positionsCles.put("PointDirection", new Point3D(20,20,0));
+		positionsCles.put("PointSousEau", new Point3D(0,0,-10));
+		positionsCles.put("ObservationMine", new Point3D(20,20,-20));
 
 		//Création de l'ocean
 		MovableState mstOcean = new MovableState(Point3D.ZERO, Point3D.ZERO, Point3D.ZERO, Point3D.ZERO, Point3D.ZERO, Point3D.ZERO); // création d'un objet movable
 		EntityMouvementSequenceurInit msiOcean = new EntityMouvementSequenceurInit("MSIOCEAN", mstOcean, 0, 0, 0, 0, positionsCles); // initialisation
 		kizil_berkouksf.getOcean().put(new EntityOceanFeature("O1"), new EntityOceanInit("Zone de recherche", msiOcean));
 		
-		//création du bateau
+		//Création du bateau
 		MovableState mstBateau;
 		EntityMouvementSequenceurInit msiBateau;
 		MovableState mst; 
@@ -45,7 +52,16 @@ public class ScenarioInstanceBE implements IScenarioInstance {
 		msiBateau= new EntityMouvementSequenceurInit("MSI", mstBateau, 0, 0,0,0, positionsCles);
 		kizil_berkouksf.getBateau().put(new BateauFeatures("Bateau", 0, 0, 3, 2, 2), new BateauInit("Bateau", msiBateau, Color.RED));
 
+		// Création drône
+		MovableState mstDrone;
+		EntityMouvementSequenceurInit msiDrone;
+		EntityMouvementSequenceurFeature msfDrone;
 		
+		mstDrone= new MovableState(new Point3D(-2,-2,-5), Point3D.ZERO, Point3D.ZERO, Point3D.ZERO, Point3D.ZERO, Point3D.ZERO);
+		msiDrone= new EntityMouvementSequenceurInit("MSI", mstDrone, 0, 0,0,0, positionsCles);
+		msfDrone = new EntityMouvementSequenceurFeature("MSF");
+		kizil_berkouksf.getDrones().put(new EntityDroneFeature("Drone1", 0.05, 0.05, Color.BLACK, msfDrone), new EntityDroneInit("Drone1", msiDrone));
+
 
 		/*//Navire1
 		mst= new MovableState(new Point3D(0,0,0), new Point3D(1,1,0), Point3D.ZERO, new Point3D(0,0,45.0), new Point3D(10,5,0.0), Point3D.ZERO);
@@ -87,6 +103,11 @@ public class ScenarioInstanceBE implements IScenarioInstance {
 		Scenario bms = new Scenario(new ScenarioId("Scenario"), kizil_berkouksf, start, end);
 		
 		return bms;
+	}
+
+	private Point3D Point3D(int i, int j, int k) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 

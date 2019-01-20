@@ -24,8 +24,8 @@ public class EntityDrone3DRepresentation extends Representation3D {
 
 	EntityDrone3DRepresentationInterface Navire3D;
 	Group bateau;
-	int r1=3;
-	int h=5;
+	float r1=1;
+	float h=(float) 0.5;
 	
 	//ici mettre les objets3D représentant l'entité 
 	//Sphere sph;
@@ -51,11 +51,11 @@ public class EntityDrone3DRepresentation extends Representation3D {
 	    bateau.getChildren().add(s);
 	    
 	    double c = r1;
-	    Box b = new Box(c,c,c);
+	    Box b = new Box(c/2,c/2,c/2);
 	    material = new PhongMaterial(Color.BLUEVIOLET);
 	    b.setMaterial(material);
 	    b.setTranslateZ(r1);
-	    b.setTranslateX(h/2-c);
+	    b.setTranslateX(h/2);
 	    bateau.getChildren().add(b);
 		world.getChildren().add(bateau);
 

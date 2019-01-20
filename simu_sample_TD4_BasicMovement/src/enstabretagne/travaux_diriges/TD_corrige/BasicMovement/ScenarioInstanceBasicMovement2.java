@@ -30,12 +30,12 @@ public class ScenarioInstanceBasicMovement2 implements IScenarioInstance {
 		//Création du navire et des points de passage
 		HashMap<String,Point3D> positionsCles = new HashMap<String, Point3D>();
 		positionsCles.put("start", new Point3D(0,0,0));
-		positionsCles.put("PointCible1", new Point3D(10,10,0));
-		positionsCles.put("PointCible2", new Point3D(30,-10,0));
-		positionsCles.put("PointCible3", new Point3D(20,0,0));
-		positionsCles.put("PointDirection", new Point3D(20,20,0));
+		positionsCles.put("PointCible1", new Point3D(5,5,0));
+		positionsCles.put("PointCible2", new Point3D(10,-10,0));
+		positionsCles.put("PointCible3", new Point3D(10,0,0));
+		positionsCles.put("PointDirection", new Point3D(10,10,0));
 		positionsCles.put("PointSousEau", new Point3D(0,0,-10));
-		positionsCles.put("ObservationMine", new Point3D(20,20,-20));
+		positionsCles.put("ObservationMine", new Point3D(10,10,-10));
 
 		
 		MovableState mst; 
