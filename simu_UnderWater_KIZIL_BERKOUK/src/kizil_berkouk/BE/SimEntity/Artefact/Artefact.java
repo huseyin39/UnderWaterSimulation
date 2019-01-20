@@ -77,6 +77,11 @@ public class Artefact extends SimEntity implements IMovable,IArtefactRepresentat
 	public double getSize() {
 		return ((ArtefactFeatures) getFeatures()).getTaille();
 	}
+	
+	@Override
+	public int getType() {
+		return ((ArtefactInit) getInitParameters()).getType();
+	}
 
 	@Override
 	protected void BeforeDeactivating(IEntity sender, boolean starting) {

@@ -9,13 +9,6 @@ public class ArtefactFeatures extends SimFeatures {
 	private double accelerationMax;
 	private double taille;
 	
-	public double getVitesseMax() {
-		return vitesseMax;
-	}
-	
-	public double getAccelerationMax() {
-		return accelerationMax;
-	}
 	
 	public ArtefactFeatures(String id,double vitesseMax,double accelerationMax,double taille) {
 		super(id);
@@ -26,6 +19,14 @@ public class ArtefactFeatures extends SimFeatures {
 
 	public double getTaille() {
 		return taille;
+	}
+	
+	public double getVitesseMax() {
+		return vitesseMax;
+	}
+	
+	public double getAccelerationMax() {
+		return accelerationMax;
 	}
 
 	public EntityMouvementSequenceurFeature getSeqFeature() {

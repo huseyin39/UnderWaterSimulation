@@ -16,17 +16,26 @@ public class Artefact3DRepresentation extends Representation3D {
 		super(settings);
 	}
 
-	IArtefactRepresentation3D bouee3D;
+	IArtefactRepresentation3D artefact3D;
 	Group maBouee;
 	@Override
 	public void init(Group world, Object obj) {
-		bouee3D = (IArtefactRepresentation3D) obj;
+		artefact3D = (IArtefactRepresentation3D) obj;
 		maBouee = new Group();
+		switch (artefact3D.getType()) {
+		case 0:
+			
+			break;
+		case
+
+		default:
+			break;
+		}
 	    
-	    PhongMaterial material = new PhongMaterial(bouee3D.getColor());
+	    PhongMaterial material = new PhongMaterial(artefact3D.getColor());
 
 
-	    Sphere s = new Sphere(bouee3D.getSize());
+	    Sphere s = new Sphere(artefact3D.getSize());
 	    s.setMaterial(material);
 	    maBouee.getChildren().add(s);
 	    world.getChildren().add(maBouee);
@@ -35,7 +44,7 @@ public class Artefact3DRepresentation extends Representation3D {
 	
 	@Override
 	public void update() {
-		Point3D p = bouee3D.getPosition();
+		Point3D p = artefact3D.getPosition();
 
 		maBouee.setTranslateX(p.getX());
 		maBouee.setTranslateY(p.getY());

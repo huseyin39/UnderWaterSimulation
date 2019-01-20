@@ -5,7 +5,6 @@ import enstabretagne.base.time.LogicalDuration;
 import enstabretagne.monitor.implementation.MovableState;
 import javafx.geometry.Point3D;
 import javafx.scene.transform.Rotate;
-import kizil_berkouk.BE.SimEntity.Bateau.IMover;
 
 public class CircularMover implements IMover{
 

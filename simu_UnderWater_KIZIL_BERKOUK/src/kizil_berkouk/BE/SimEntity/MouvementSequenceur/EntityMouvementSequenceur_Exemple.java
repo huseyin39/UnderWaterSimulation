@@ -11,7 +11,6 @@ import enstabretagne.simulation.components.data.SimInitParameters;
 import enstabretagne.simulation.core.implementation.SimEvent;
 import javafx.geometry.Point3D;
 import javafx.scene.transform.Rotate;
-import kizil_berkouk.BE.SimEntity.Bateau.IMover;
 
 @ToRecord(name="MouvementSequenceur")
 public class EntityMouvementSequenceur_Exemple extends EntityMouvementSequenceur implements IMover{

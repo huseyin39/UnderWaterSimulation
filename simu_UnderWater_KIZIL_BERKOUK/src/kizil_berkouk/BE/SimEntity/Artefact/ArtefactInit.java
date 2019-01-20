@@ -7,15 +7,22 @@ import kizil_berkouk.BE.SimEntity.MouvementSequenceur.EntityMouvementSequenceurI
 public class ArtefactInit extends SimInitParameters {
 	private String name;
 	private Color couleur;
+	private int type;
 	
 	private EntityMouvementSequenceurInit mvtSeqInit;
 	
 	
-	public ArtefactInit(String nom,EntityMouvementSequenceurInit mvtSeqInit,Color c)
+	public ArtefactInit(String nom,EntityMouvementSequenceurInit mvtSeqInit,Color c, int type)
 	{
 		this.name = nom;
 		this.couleur=c;
 		this.mvtSeqInit = mvtSeqInit;
+		this.type = type;
+	}
+	
+	
+	public int getType() {
+		return type;
 	}
 	
 	public EntityMouvementSequenceurInit getMvtSeqInit() {

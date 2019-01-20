@@ -1,4 +1,4 @@
-package kizil_berkouk.BE.SimEntity.Bateau;
+package kizil_berkouk.BE.SimEntity.MouvementSequenceur;
 
 import enstabretagne.base.time.LogicalDateTime;
 import enstabretagne.base.time.LogicalDuration;
