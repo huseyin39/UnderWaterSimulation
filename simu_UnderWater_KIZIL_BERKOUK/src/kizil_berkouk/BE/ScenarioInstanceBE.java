@@ -41,7 +41,7 @@ public class ScenarioInstanceBE implements IScenarioInstance {
 		EntityMouvementSequenceurInit msiBateau;
 		MovableState mst; 
 
-		mstBateau= new MovableState(new Point3D(10,0,0), Point3D.ZERO, Point3D.ZERO, Point3D.ZERO, Point3D.ZERO, Point3D.ZERO);
+		mstBateau= new MovableState(new Point3D(0,0,1), Point3D.ZERO, Point3D.ZERO, Point3D.ZERO, Point3D.ZERO, Point3D.ZERO);
 		msiBateau= new EntityMouvementSequenceurInit("MSI", mstBateau, 0, 0,0,0, positionsCles);
 		kizil_berkouksf.getBateau().put(new BateauFeatures("Bateau", 0, 0, 3, 2, 2), new BateauInit("Bateau", msiBateau, Color.RED));
 
