@@ -6,7 +6,6 @@ import enstabretagne.monitor.implementation.MovableState;
 import enstabretagne.monitor.implementation.XYZRotator2;
 import javafx.geometry.Point3D;
 import javafx.scene.transform.Rotate;
-import kizil_berkouk.BE.SimEntity.Bateau.IMover;
 
 public class SelfRotator implements IMover {
 

@@ -7,7 +7,6 @@ import enstabretagne.simulation.components.IEntity;
 import enstabretagne.simulation.components.data.SimFeatures;
 import enstabretagne.simulation.components.data.SimInitParameters;
 import enstabretagne.simulation.components.implementation.SimEntity;
-import kizil_berkouk.BE.SimEntity.Bateau.IMover;
 import kizil_berkouk.BE.SimEntity.MouvementSequenceur.EntityMouvementSequenceurInit;
 import javafx.geometry.Point3D;
 

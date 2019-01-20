@@ -6,7 +6,6 @@ import enstabretagne.base.time.LogicalDuration;
 import enstabretagne.monitor.implementation.MovableState;
 import enstabretagne.monitor.implementation.XYZRotator2;
 import javafx.geometry.Point3D;
-import kizil_berkouk.BE.SimEntity.Bateau.IMover;
 
 public class RectilinearMover implements IMover{
 
