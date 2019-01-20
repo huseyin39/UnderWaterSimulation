@@ -1,18 +1,15 @@
 package kizil_berkouk.BE.SimEntity.Artefact.Representation3D;
 
 
-import java.awt.Shape;
 
 import enstabretagne.monitor.Contrat3D;
 import enstabretagne.monitor.ObjTo3DMappingSettings;
 import enstabretagne.monitor.implementation.Representation3D;
 import javafx.geometry.Point3D;
 import javafx.scene.Group;
-import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Box;
 import javafx.scene.shape.Cylinder;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Sphere;
 
 @Contrat3D(contrat = IArtefactRepresentation3D.class)

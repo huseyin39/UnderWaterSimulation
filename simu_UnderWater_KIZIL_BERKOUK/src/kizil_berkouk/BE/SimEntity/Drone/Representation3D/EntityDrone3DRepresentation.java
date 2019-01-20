@@ -27,8 +27,6 @@ public class EntityDrone3DRepresentation extends Representation3D {
 	int r1=1;
 	int h=2;
 	
-	//ici mettre les objets3D représentant l'entité 
-	//Sphere sph;
 
 	@Override
 	public void init(Group world, Object obj) {
