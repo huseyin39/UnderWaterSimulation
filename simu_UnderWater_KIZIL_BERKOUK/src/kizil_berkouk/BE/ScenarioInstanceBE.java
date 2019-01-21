@@ -61,7 +61,7 @@ public class ScenarioInstanceBE implements IScenarioInstance {
 		mstDrone= new MovableState(new Point3D(-2,-2,-5), Point3D.ZERO, Point3D.ZERO, Point3D.ZERO, Point3D.ZERO, Point3D.ZERO);
 		msiDrone= new EntityMouvementSequenceurInit("MSI", mstDrone, 0, 0, 0, 0, positionsCles);
 		msfDrone = new EntityMouvementSequenceurFeature("MSF");
-		kizil_berkouksf.getDrones().put(new EntityDroneFeature("Drone", 0.05, 0.05, Color.BLACK, msfDrone), new EntityDroneInit("Drone", msiDrone));
+		kizil_berkouksf.getDrones().put(new EntityDroneFeature("Drone", 2, 5, Color.BLACK, msfDrone), new EntityDroneInit("Drone", msiDrone));
 
 		//Création artefacts
 		int i;

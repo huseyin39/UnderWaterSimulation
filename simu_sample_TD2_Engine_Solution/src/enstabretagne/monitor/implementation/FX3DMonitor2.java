@@ -174,7 +174,7 @@ public class FX3DMonitor2 extends Application implements IMonitor {
 		updateDelay = LogicalDuration.ofSeconds(1.0 / fps);
 
 		requestStop = false;
-		defaultDir = new Point3D(-1,-1,-1).multiply(100);
+		defaultDir = new Point3D(-1,-1,-1).multiply(200);
 		
 		engine = new SimEngine();
 		Logger.setDateProvider(engine);
@@ -414,7 +414,7 @@ public class FX3DMonitor2 extends Application implements IMonitor {
 		});
 
 		root = new Group();
-		double width = 1024;
+		double width = 1366;
 		double height = 768;
 		SubScene subScene = new SubScene(root, width, height, true, SceneAntialiasing.BALANCED);
 

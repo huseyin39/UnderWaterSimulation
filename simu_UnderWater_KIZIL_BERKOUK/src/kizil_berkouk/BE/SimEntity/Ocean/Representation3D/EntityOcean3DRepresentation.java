@@ -25,7 +25,7 @@ public class EntityOcean3DRepresentation extends Representation3D {
 		PhongMaterial OceanMaterial = new PhongMaterial();
 		OceanMaterial.setDiffuseColor(Color.BLACK);
 
-		double size = 200;  // divisé par 1000
+		double size = 200;  
 		double epaisseurs = 30;
 		Group g = new Group();
 

@@ -24,15 +24,14 @@ public class EntityDrone3DRepresentation extends Representation3D {
 
 	EntityDrone3DRepresentationInterface Drone3D;
 	Group drone;
-	int r1=1;
-	int h=2;
 	
 
 	@Override
 	public void init(Group world, Object obj) {
 		Drone3D = (EntityDrone3DRepresentationInterface) obj;
 	    drone = new Group();
-	    
+	    double r1 = Drone3D.getRayon();
+		int h = 2;
 	    
 	    PhongMaterial material = new PhongMaterial(Drone3D.getColor());
 

@@ -19,11 +19,11 @@ public class EntityDrone extends SimEntity implements IMovable,EntityDrone3DRepr
 	
 	private EntityMouvementSequenceur rmv;
 	private EntityDroneInit DroneInit;
-	private EntityDroneFeature NavireFeature;
+	private EntityDroneFeature DroneFeature;
 	
 	public EntityDrone(String name, SimFeatures features) {
 		super(name, features);
-		NavireFeature = (EntityDroneFeature) features;
+		DroneFeature = (EntityDroneFeature) features;
 	}
 
 	@Override
@@ -108,17 +108,17 @@ public class EntityDrone extends SimEntity implements IMovable,EntityDrone3DRepr
 
 	@Override
 	public Color getColor() {
-		return NavireFeature.getCouleur();
+		return DroneFeature.getCouleur();
 	}
 
 	@Override
 	public double getRayon() {
-		return NavireFeature.getRayon();
+		return DroneFeature.getRayon();
 	}
 
 	@Override
 	public double getLongueur() {
-		return NavireFeature.getTaille();
+		return DroneFeature.getTaille();
 	}
 
 }
