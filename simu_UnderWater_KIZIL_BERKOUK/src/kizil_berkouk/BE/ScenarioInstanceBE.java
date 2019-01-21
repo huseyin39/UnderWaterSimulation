@@ -2,6 +2,7 @@ package kizil_berkouk.BE;
 
 import java.util.HashMap;
 
+import enstabretagne.base.math.MoreRandom;
 import enstabretagne.base.time.LogicalDateTime;
 import enstabretagne.base.time.LogicalDuration;
 import enstabretagne.monitor.implementation.MovableState;
@@ -24,6 +25,7 @@ import kizil_berkouk.BE.SimEntity.Ocean.EntityOceanFeature;
 import kizil_berkouk.BE.SimEntity.Ocean.EntityOceanInit;
 
 public class ScenarioInstanceBE implements IScenarioInstance {
+	MoreRandom mRandom = new MoreRandom();
 
 	@Override
 	public IScenario getScenarioInstance() {
@@ -46,7 +48,6 @@ public class ScenarioInstanceBE implements IScenarioInstance {
 		//Création du bateau
 		MovableState mstBateau;
 		EntityMouvementSequenceurInit msiBateau;
-		MovableState mst; 
 
 		mstBateau= new MovableState(new Point3D(0,0,1), Point3D.ZERO, Point3D.ZERO, Point3D.ZERO, Point3D.ZERO, Point3D.ZERO);
 		msiBateau= new EntityMouvementSequenceurInit("MSI", mstBateau, 0, 0,0,0, positionsCles);
@@ -58,10 +59,62 @@ public class ScenarioInstanceBE implements IScenarioInstance {
 		EntityMouvementSequenceurFeature msfDrone;
 		
 		mstDrone= new MovableState(new Point3D(-2,-2,-5), Point3D.ZERO, Point3D.ZERO, Point3D.ZERO, Point3D.ZERO, Point3D.ZERO);
-		msiDrone= new EntityMouvementSequenceurInit("MSI", mstDrone, 0, 0,0,0, positionsCles);
+		msiDrone= new EntityMouvementSequenceurInit("MSI", mstDrone, 0, 0, 0, 0, positionsCles);
 		msfDrone = new EntityMouvementSequenceurFeature("MSF");
-		kizil_berkouksf.getDrones().put(new EntityDroneFeature("Drone1", 0.05, 0.05, Color.BLACK, msfDrone), new EntityDroneInit("Drone1", msiDrone));
+		kizil_berkouksf.getDrones().put(new EntityDroneFeature("Drone", 0.05, 0.05, Color.BLACK, msfDrone), new EntityDroneInit("Drone", msiDrone));
 
+		//Création artefacts
+		int i;
+		//mRandom.setSeed(seed); to set a seed
+		int N = (int)mRandom.nextUniform(30, 40);
+		System.out.println(N);
+		positionsCles = new HashMap<String, Point3D>();
+		
+		int N1 = (int) Math.round(N*0.6);
+		int N2 = (int) Math.round(N*0.3);
+		int N3 = N - N1 - N2;
+
+		for(i=1; i<=N1; i++) //Artefact de type 1
+		{
+			MovableState mstArtefact;
+			EntityMouvementSequenceurInit msiArtefact;
+						
+			mstArtefact = new MovableState(point3dArtefact(), Point3D.ZERO, Point3D.ZERO, Point3D.ZERO, Point3D.ZERO, Point3D.ZERO);
+			msiArtefact= new EntityMouvementSequenceurInit("MSI", mstArtefact, 0, 0,0,0, positionsCles);
+			kizil_berkouksf.getArtefacts().put(new ArtefactFeatures("ArtefactT1", 0, 0, 3.0), new ArtefactInit("Type1A"+i,msiArtefact, 1));
+		}
+		
+		
+		for(i=1; i<=N2; i++) //Artefact de type 2
+		{
+			MovableState mstArtefact;
+			EntityMouvementSequenceurInit msiArtefact;
+			
+			mstArtefact = new MovableState(point3dArtefact(), Point3D.ZERO, Point3D.ZERO, Point3D.ZERO, Point3D.ZERO, Point3D.ZERO);
+			msiArtefact= new EntityMouvementSequenceurInit("MSI", mstArtefact, 0, 0,0,0, positionsCles);
+			kizil_berkouksf.getArtefacts().put(new ArtefactFeatures("ArtefactT2", 0, 0, 3.0, 5.0), new ArtefactInit("Type2A"+i,msiArtefact, 2));
+		}
+		
+		for(i=1; i<=N3; i++) //Artefact de type 3
+		{
+			MovableState mstArtefact;
+			EntityMouvementSequenceurInit msiArtefact;
+						
+			mstArtefact = new MovableState(point3dArtefact(), Point3D.ZERO, Point3D.ZERO, Point3D.ZERO, Point3D.ZERO, Point3D.ZERO);
+			msiArtefact= new EntityMouvementSequenceurInit("MSI", mstArtefact, 0, 0,0,0, positionsCles);
+			kizil_berkouksf.getArtefacts().put(new ArtefactFeatures("ArtefactT3", 0, 0, 5.0, 5.0, 3.0), new ArtefactInit("Type3A"+i,msiArtefact, 3));
+
+		}
+		
+		//Création de la cible
+		MovableState mstArtefact;
+		EntityMouvementSequenceurInit msiArtefact;
+		int taille = (int) Math.round( mRandom.nextUniform(2, 5) );
+		mstArtefact = new MovableState(point3dArtefact(), Point3D.ZERO, Point3D.ZERO, Point3D.ZERO, Point3D.ZERO, Point3D.ZERO);
+		msiArtefact= new EntityMouvementSequenceurInit("MSI", mstArtefact, 0, 0,0,0, positionsCles);
+		kizil_berkouksf.getArtefacts().put(new ArtefactFeatures("Cible", 0, 0, taille, taille, taille), new ArtefactInit("Cible",msiArtefact, 0));
+
+		
 
 		/*//Navire1
 		mst= new MovableState(new Point3D(0,0,0), new Point3D(1,1,0), Point3D.ZERO, new Point3D(0,0,45.0), new Point3D(10,5,0.0), Point3D.ZERO);
@@ -70,21 +123,7 @@ public class ScenarioInstanceBE implements IScenarioInstance {
 		bsf.getNavires().put(new EntityNavireFeature("NavireF",5,3,Color.BLACK,feat), new EntityNavireInit("Navire Observation 1", msi));
 
 		//Création de bouees
-		int i=0;
-		int N=10;
-		positionsCles = new HashMap<String, Point3D>();
-		for(i=0;i<N;i++) 
-		{
-			MovableState mstBouee;
-			EntityMouvementSequenceurInit msiBouee;
-			
-			
-			mstBouee = new MovableState(new Point3D(10*i,0,0), Point3D.ZERO, Point3D.ZERO, Point3D.ZERO, Point3D.ZERO, Point3D.ZERO);
-			msiBouee= new EntityMouvementSequenceurInit("MSI", mstBouee, 0, 0,0,0, positionsCles);
-			bsf.getBouees().put(new BoueeFeatures("B1",5,1,3.0), new BoueeInit("B"+i,msiBouee,Color.RED));
-
-			
-		}
+		
 		
 		//Création du navire et des points de passage
 		positionsCles = new HashMap<String, Point3D>();
@@ -104,11 +143,21 @@ public class ScenarioInstanceBE implements IScenarioInstance {
 		
 		return bms;
 	}
-
-	private Point3D Point3D(int i, int j, int k) {
-		// TODO Auto-generated method stub
-		return null;
+	
+	public Point3D point3dArtefact() {
+		double x = mRandom.nextUniform(-100, 100);
+		double y = mRandom.nextUniform(-100, 100);
+		double z = mRandom.nextUniform(-30, 0);
+		return new Point3D(x, y, z);
 	}
+	
+	public Point3D point3dArtefactCible() {
+		double x = mRandom.nextUniform(-100, 100);// set the value here to be sure that it is under 1 km deep
+		double y = mRandom.nextUniform(-100, 100);
+		double z = mRandom.nextUniform(-30, 0);
+		return new Point3D(x, y, z);
+	}
+	
 
 
 }

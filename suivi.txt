@@ -5,4 +5,7 @@
 - ScenarioInstanceBE : La positon du bateau est cractérisé par son centre géométrique. Il est au centre pour (0,0,h/2) ici la valeur de h vaut 2
 
 H: 
- mise en place des artefacts + target ---> tester la visualisation et la création
+ mise en place des artefacts + target ---> tester la visualisation et la création --> attention aux effets de bord
+
+- regler le logger
+- moreRandom pour la gestion des seed

@@ -44,7 +44,7 @@ public class Artefact extends SimEntity implements IMovable,IArtefactRepresentat
 
 	@Override
 	protected void AfterActivate(IEntity sender, boolean starting) {
-		Logger.Detail(this, "AfterActivate", "Activation de la bouée %s","test");
+		Logger.Detail(this, "AfterActivate", "Activation de l'artefact %s","test");
 		rmv.activate();
 //		Logger.Data(this);
 	}
