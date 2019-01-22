@@ -174,7 +174,7 @@ public class FX3DMonitor2 extends Application implements IMonitor {
 		updateDelay = LogicalDuration.ofSeconds(1.0 / fps);
 
 		requestStop = false;
-		defaultDir = new Point3D(-1,-1,-1).multiply(200);
+		defaultDir = new Point3D(-1,-1,-1).multiply(150);
 		
 		engine = new SimEngine();
 		Logger.setDateProvider(engine);

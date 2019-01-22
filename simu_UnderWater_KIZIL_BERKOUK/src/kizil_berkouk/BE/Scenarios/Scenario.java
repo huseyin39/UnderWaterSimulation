@@ -1,5 +1,6 @@
 package kizil_berkouk.BE.Scenarios;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 import enstabretagne.base.logger.Logger;
@@ -25,6 +26,9 @@ import kizil_berkouk.BE.SimEntity.Ocean.EntityOceanFeature;
 import kizil_berkouk.BE.SimEntity.Ocean.EntityOceanInit;
 
 public class Scenario extends SimScenario{
+	
+	protected static ArrayList<EntityDrone> listEntityDrones = new ArrayList<>();
+	
 
 	public Scenario(ScenarioId id, SimFeatures features, LogicalDateTime start, LogicalDateTime end) {
 		super(id, features, start, end);
@@ -57,12 +61,15 @@ public class Scenario extends SimScenario{
 		{
 			Logger.Detail(this, "afteractivate", "drone à créer = %s , %s", e.getValue(),e.getKey());
 			Post(new DroneArrival(e.getValue(),e.getKey()));
+			System.out.println("testtttt : " + listEntityDrones.size());
+
 		}
 		for(Map.Entry<EntityOceanFeature, EntityOceanInit> e : feature.getOcean().entrySet())
 		{
 			Logger.Detail(this, "afteractivate", "océan à créer = %s , %s", e.getValue(),e.getKey());
 			Post(new OceanArrival(e.getValue(),e.getKey()));
 		}
+		
 	}
 	
 	class BateauArrival extends SimEvent
@@ -114,8 +121,10 @@ public class Scenario extends SimScenario{
 
 		@Override
 		public void Process() {
-			Logger.Detail(this, "DroneArrival.Process", "Création du drone" + i);
+			Logger.Detail(this, "DroneArrival.Process", "Création du drone " + i.getName());
 			SimEntity b = createChild(EntityDrone.class, i.getName() , f);
+			EntityDrone drone = (EntityDrone) b;
+			listEntityDrones.add(drone);
 			b.initialize(getI());
 			b.activate();
 		}
@@ -143,7 +152,7 @@ public class Scenario extends SimScenario{
 
 		@Override
 		public void Process() {
-			Logger.Detail(this, "ArtefactArrival.Process", "Création de l'artefact" + i);
+			Logger.Detail(this, "ArtefactArrival.Process", "Création de l'artefact" + i.getName());
 			SimEntity b = createChild(Artefact.class, i.getName() , f);
 			b.initialize(getI());
 			b.activate();
@@ -172,10 +181,11 @@ public class Scenario extends SimScenario{
 
 		@Override
 		public void Process() {
-			Logger.Detail(this, "OceanArrival.Process", "Création de l'océan" + i);
+			Logger.Detail(this, "OceanArrival.Process", "Création de l'océan" + i.getName());
 			SimEntity b = createChild(EntityOcean.class, i.getName() , f);
 			b.initialize(getI());
 			b.activate();
+			System.out.println("testtttt : " + listEntityDrones.size());
 		}
 		
 	}

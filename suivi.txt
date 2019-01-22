@@ -5,7 +5,10 @@
 - ScenarioInstanceBE : La positon du bateau est cractérisé par son centre géométrique. Il est au centre pour (0,0,h/2) ici la valeur de h vaut 2
 
 H: 
- mise en place des artefacts + target ---> tester la visualisation et la création --> attention aux effets de bord
+ attention aux effets de bord
+ startScan() :  timer pour le faire toutes les  minutes + disparition de l'écran: pas besoin, juste enlever du hashMap, pour ne pas le chercher à nouveau
+ScenarioFeatures sait où sont les artefacts, le drone l'interroge donc.
+trouver la localisation de ==Navire Observation 1
 
-- regler le logger
+- regler le logger (tous les removes) ?
 - moreRandom pour la gestion des seed
