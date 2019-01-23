@@ -50,11 +50,7 @@ public class EntityDrone extends SimEntity implements IMovable,EntityDrone3DRepr
 	@Override
 	protected void initializeSimEntity(SimInitParameters init) {
 		DroneInit = (EntityDroneInit) getInitParameters();
-		if (DroneFeature.getId().equals("Drone1"))
-			rmv = (EntityMouvementSequenceur_Exemple) createChild(EntityMouvementSequenceur_Exemple.class, "monSequenceur", ((EntityDroneFeature) getFeatures()).getSeqFeature());
-		else {
-			rmv = (EntityMouvementSequenceur_Exemple2) createChild(EntityMouvementSequenceur_Exemple2.class, "monSequenceur2", ((EntityDroneFeature) getFeatures()).getSeqFeature());
-		}
+		rmv = (EntityMouvementSequenceur_Exemple) createChild(EntityMouvementSequenceur_Exemple.class, "monSequenceur", ((EntityDroneFeature) getFeatures()).getSeqFeature());
 		rmv.initialize(DroneInit.getMvtSeqInitial());
 	
 	}

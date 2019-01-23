@@ -20,9 +20,6 @@ public class EntityMouvementSequenceur_Exemple extends EntityMouvementSequenceur
 	
 	public EntityMouvementSequenceur_Exemple(String name, SimFeatures features) {
 		super(name, features);
-		
-		
-		
 	}
 
 	@Override
@@ -47,6 +44,7 @@ public class EntityMouvementSequenceur_Exemple extends EntityMouvementSequenceur
 			break;
 		case 2:
 			Post(new FinStaticPhase1_2DD1(), LogicalDuration.ofSeconds(1));
+			Post(new FinCircularPhase3_2DD2(), LogicalDuration.ofSeconds(1));
 			break;
 		case 3 :
 			Post(new FinStaticPhase1_3DD1(), LogicalDuration.ofSeconds(1));
@@ -150,7 +148,6 @@ public class EntityMouvementSequenceur_Exemple extends EntityMouvementSequenceur
 				mv= circulrMover;
 				Logger.Information(Owner(), "Process FinStaticPhase1", "Phase mouvement circulaire enclenché");
 				Post(new Arret(),mv.getDurationToReach());
-				Post(new FinCircularPhase3_2DD2(), mv.getDurationToReach());
 				
 			}
 		}
