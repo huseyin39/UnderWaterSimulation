@@ -33,21 +33,23 @@ public class ScenarioInstanceBE implements IScenarioInstance {
 		ScenarioFeatures kizil_berkouksf = new ScenarioFeatures("kizil_berkoukSF");
 		// Trajectoire du D1 -- 1D
 		HashMap<String,Point3D> positionsCles = new HashMap<String, Point3D>();
+
 			positionsCles.put("start", new Point3D(-600,-600,0));
 			positionsCles.put("PointCible1", new Point3D(-600,600,0));
 			positionsCles.put("PointCible2", new Point3D(200,600,0));
 			positionsCles.put("PointCible3", new Point3D(200,-600,0));
 			positionsCles.put("PointCible4", new Point3D(1000,-600,0));
 			positionsCles.put("PointCible5", new Point3D(1000,600,0));
+
 		// Trajectoire D1 -- 2D
 		HashMap<String,Point3D> positionsCles21 = new HashMap<String, Point3D>();
 			positionsCles21.put("start", new Point3D(-6000,-6000,0));
 			positionsCles21.put("PointCible1", new Point3D(-6000,6000,0));
-			positionsCles21.put("PointCible2", new Point3D(2000,6000,0));
-			positionsCles21.put("PointCible3", new Point3D(2000,-6000,0));	
+			positionsCles21.put("PointCible2", new Point3D(2000,6000,0));	
 		// Trajectoire D2 -- 2D
 		HashMap<String,Point3D> positionsCles22 = new HashMap<String, Point3D>();
-			positionsCles22.put("start", new Point3D(2000,-6000,0));
+			positionsCles22.put("start", new Point3D(2000,6000,0));
+			positionsCles21.put("PointCible3", new Point3D(2000,-6000,0));
 			positionsCles22.put("PointCible4", new Point3D(10000,-6000,0));
 			positionsCles22.put("PointCible5", new Point3D(10000,6000,0));
 		// Trajectoire D1 -- 3
@@ -89,6 +91,7 @@ public class ScenarioInstanceBE implements IScenarioInstance {
 			// Drone 1
 			mstDrone= new MovableState(new Point3D(-600,-600,0),new Point3D(Math.sqrt(2)*4, Math.sqrt(2)*4,0), Point3D.ZERO, Point3D.ZERO, Point3D.ZERO, Point3D.ZERO);
 			msiDrone= new EntityMouvementSequenceurInit("MSI", mstDrone, 200, 0, 0, 0, positionsCles);
+
 			msfDrone = new EntityMouvementSequenceurFeature("MSF");
 			kizil_berkouksf.getDrones().put(new EntityDroneFeature("Drone1", 10, 5, Color.BLACK, msfDrone, kizil_berkouksf), new EntityDroneInit("Drone1", msiDrone));
 		
@@ -101,7 +104,7 @@ public class ScenarioInstanceBE implements IScenarioInstance {
 			kizil_berkouksf.getDrones().put(new EntityDroneFeature("Drone1", 10, 5, Color.BLACK, msfDrone, kizil_berkouksf), new EntityDroneInit("Drone1", msiDrone));
 			
 			//Drone 2
-			mstDrone= new MovableState(new Point3D(2000,-6000,0),new Point3D(Math.sqrt(2)*4, Math.sqrt(2)*4,0), Point3D.ZERO, Point3D.ZERO, Point3D.ZERO, Point3D.ZERO);
+			mstDrone= new MovableState(new Point3D(2000,6000,0),new Point3D(Math.sqrt(2)*4, Math.sqrt(2)*4,0), Point3D.ZERO, Point3D.ZERO, Point3D.ZERO, Point3D.ZERO);
 			msiDrone= new EntityMouvementSequenceurInit("MSI", mstDrone, 2000, 0, 0, 0, positionsCles22);
 			msfDrone = new EntityMouvementSequenceurFeature("MSF");
 			kizil_berkouksf.getDrones().put(new EntityDroneFeature("Drone2", 10, 5, Color.GREEN, msfDrone, kizil_berkouksf), new EntityDroneInit("Drone2", msiDrone));
