@@ -32,6 +32,7 @@ import enstabretagne.simulation.core.implementation.SimEngine;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -174,7 +175,7 @@ public class FX3DMonitor2 extends Application implements IMonitor {
 		updateDelay = LogicalDuration.ofSeconds(1.0 / fps);
 
 		requestStop = false;
-		defaultDir = new Point3D(-1,-1,-1).multiply(150);
+		defaultDir = new Point3D(-1,-1,-1).multiply(300);
 		
 		engine = new SimEngine();
 		Logger.setDateProvider(engine);
@@ -392,6 +393,10 @@ public class FX3DMonitor2 extends Application implements IMonitor {
 		options.clear();
 		entitiesWorld.getChildren().clear();
 		objectRepresentation.clear();
+	}
+	
+	public static void finishIt() {
+		Platform.exit();
 	}
 
 	@Override

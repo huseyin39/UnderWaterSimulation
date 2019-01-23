@@ -185,7 +185,6 @@ public class Scenario extends SimScenario{
 			SimEntity b = createChild(EntityOcean.class, i.getName() , f);
 			b.initialize(getI());
 			b.activate();
-			System.out.println("testtttt : " + listEntityDrones.size());
 		}
 		
 	}

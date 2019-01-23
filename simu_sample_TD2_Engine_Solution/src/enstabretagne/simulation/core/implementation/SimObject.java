@@ -278,8 +278,10 @@ public abstract class SimObject implements ISimObject{
 	public void postInterrupt(ISimEvent ev, LogicalDateTime t) {
 		ev.initialize(this, t);
 		Logger.Information(ev.Owner(),"InterruptPost",MessagesSimEngine.PostingAt0, ev.ScheduleDate());
-		for(ISimEvent event: timeEvents.keySet())
-			timeEvents.get(event).ScheduleDate().add(LogicalDuration.ofSeconds(10));
+		for(ISimEvent event: timeEvents.keySet()) {
+			timeEvents.get(event).ScheduleDate().add(LogicalDuration.ofSeconds(30));
+			System.out.println(timeEvents.get(event).ScheduleDate().toString());
+		}
 		timeEvents.put(ev, ev);
 		if (IsActive() && (engine != null))
 		    engine.OnInterruptPosted(ev);

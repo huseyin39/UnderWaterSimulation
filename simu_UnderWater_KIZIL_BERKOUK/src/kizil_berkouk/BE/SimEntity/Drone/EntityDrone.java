@@ -4,11 +4,14 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 import enstabretagne.base.logger.Logger;
 import enstabretagne.base.logger.ToRecord;
 import enstabretagne.base.time.LogicalDateTime;
+import enstabretagne.base.time.LogicalDuration;
+import enstabretagne.monitor.implementation.FX3DMonitor2;
 import enstabretagne.monitor.interfaces.IMovable;
 import enstabretagne.simulation.components.IEntity;
 import enstabretagne.simulation.components.data.SimFeatures;
@@ -132,21 +135,26 @@ public class EntityDrone extends SimEntity implements IMovable,EntityDrone3DRepr
 	}
 	
 	public void startScan() {
+		ScheduledThreadPoolExecutor scheduledPool = (ScheduledThreadPoolExecutor) Executors.newScheduledThreadPool(1);
 		Runnable runnabledelayedTask = new Runnable()
 		{
 			@Override
 			public void run()
 			{
 				LogicalDateTime d = getCurrentLogicalDate();
-				if (d.compareTo(new LogicalDateTime("20/01/2018 06:00")) > 0)
-					scan();
+				if (d.compareTo(new LogicalDateTime("20/01/2018 06:00")) > 0) {
+
+					if (scan())
+						scheduledPool.shutdownNow();
+					
+				}
 			}
 		};
-		ScheduledExecutorService scheduledPool = Executors.newScheduledThreadPool(1);
+		
 		scheduledPool.scheduleWithFixedDelay(runnabledelayedTask, 0, 1, TimeUnit.SECONDS);
 	}
 	
-	public void scan() {
+	public boolean scan() {
 		System.out.println("Scanning " + getName());
 		HashMap<ArtefactFeatures, ArtefactInit> artefacts = DroneFeature.getScenarioFeatures().getArtefacts();
 		if (artefacts != null) { // pour éviter de Throw un nullPointerException
@@ -154,18 +162,26 @@ public class EntityDrone extends SimEntity implements IMovable,EntityDrone3DRepr
 				ArtefactFeatures artefactFeatures = entry.getKey();
 				ArtefactInit artefactInit =entry.getValue();
 				Point3D positionArtefact3d = artefactInit.getMvtSeqInit().getEtatInitial().getPosition(); //position artefact
+				
 				if (isDetectable(positionArtefact3d)) {
-					// stoppez le drone ici et analyzer la cible
-					postInterrupt(new interuptPhase(), getCurrentLogicalDate());
-					System.out.println("Artefact trouvé " + artefactFeatures.getId() + " position " + positionArtefact3d.toString()); 
+					//postInterrupt(new interuptPhase(), getCurrentLogicalDate().add(LogicalDuration.ofSeconds(1)));
+					
 					if (artefactInit.getType() == 0) {
-						//cible trouvé
-					}else
+						System.out.println("\n ------- Cible trouvé !! " + " Position :" + positionArtefact3d.toString());
+						interruptEngineByDate();
+						//FX3DMonitor2.finishIt();
+						return true;
+						
+					}else {
 						artefacts.remove(artefactFeatures); //On retire l'objet trouvé
-					break;
+						System.out.println("Artefact trouvé " + artefactFeatures.getId() + " position " + positionArtefact3d.toString());
+						return false;
+					}
 				}
+				
 			}
 		}
+		return false;
 	}
 	
 	public class interuptPhase extends SimEvent {
