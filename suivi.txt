@@ -7,8 +7,11 @@
 H: 
  attention aux effets de bord
  startScan() :  timer pour le faire toutes les  minutes + disparition de l'écran: pas besoin, juste enlever du hashMap, pour ne pas le chercher à nouveau
+- arrêter le processus drone lorsque le drone trouve un artefact
 ScenarioFeatures sait où sont les artefacts, le drone l'interroge donc.
 trouver la localisation de ==Navire Observation 1
+- creer fonction intterrupt, et en fait on Post() au début de la liste dans SimObject
+SortedList (fonction pour ajouter au début) <- SimEngine (intteruptEventPosted) <- SimEntity .... <- EntityDrone : call()
 
 - regler le logger (tous les removes) ?
 - moreRandom pour la gestion des seed

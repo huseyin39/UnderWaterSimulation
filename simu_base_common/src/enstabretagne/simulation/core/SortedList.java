@@ -55,6 +55,11 @@ public class SortedList<T extends Comparable<T>> implements Iterable<T> {
 		Collections.sort(l);
 	}
 	
+	public void addFirst(T element) {
+		l.add(0, element);
+		Collections.sort(l);
+	}
+	
 	/**
 	 * Removes the.
 	 *

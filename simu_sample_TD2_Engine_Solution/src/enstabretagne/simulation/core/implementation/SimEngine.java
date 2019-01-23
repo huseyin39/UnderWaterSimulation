@@ -570,6 +570,18 @@ public class SimEngine implements ISimEngine{
             }
             allTimeEvents.add(ev);
         } // OnEventPosted() 
+        
+        
+        
+        public void OnInterruptPosted(ISimEvent ev) {
+        	if (ev.ScheduleDate().compareTo(simulationDate)<0){
+                Logger.Error(this,"OnInterruptPosted",MessagesSimEngine.ReScheduledAtNowFrom0, ev.ScheduleDate());
+                ev.resetProcessDate(simulationDate);
+            }
+        	for (ISimEvent event : allTimeEvents)
+        		event.ScheduleDate().add(LogicalDuration.ofSeconds(10));
+        	allTimeEvents.addFirst(ev);
+        }
 
         /// <summary>
         /// Method called when a SimObject controled by this engine has an event unposted
@@ -582,6 +594,9 @@ public class SimEngine implements ISimEngine{
             checkWriteAllowed("UnpostStrongTimeEvent");
             allTimeEvents.remove(ev);
         } // OnEventUnPosted() 
+        
+        
+        
 
 
         /// <summary>

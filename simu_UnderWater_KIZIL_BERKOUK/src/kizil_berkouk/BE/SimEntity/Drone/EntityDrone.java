@@ -20,7 +20,11 @@ import kizil_berkouk.BE.SimEntity.Artefact.ArtefactInit;
 import kizil_berkouk.BE.SimEntity.Drone.Representation3D.EntityDrone3DRepresentationInterface;
 import kizil_berkouk.BE.SimEntity.MouvementSequenceur.EntityMouvementSequenceur;
 import kizil_berkouk.BE.SimEntity.MouvementSequenceur.EntityMouvementSequenceur_Exemple;
+import kizil_berkouk.BE.SimEntity.MouvementSequenceur.RectilinearMover;
+import kizil_berkouk.BE.SimEntity.MouvementSequenceur.StaticMover;
+import kizil_berkouk.BE.SimEntity.MouvementSequenceur.EntityMouvementSequenceur_Exemple.BugCorrection;
 import enstabretagne.simulation.components.implementation.SimEntity;
+import enstabretagne.simulation.core.implementation.SimEvent;
 
 
 @ToRecord(name="Drone")
@@ -139,7 +143,7 @@ public class EntityDrone extends SimEntity implements IMovable,EntityDrone3DRepr
 			}
 		};
 		ScheduledExecutorService scheduledPool = Executors.newScheduledThreadPool(1);
-		scheduledPool.scheduleWithFixedDelay(runnabledelayedTask, 0, 2, TimeUnit.SECONDS);
+		scheduledPool.scheduleWithFixedDelay(runnabledelayedTask, 0, 20, TimeUnit.SECONDS);
 	}
 	
 	public void scan() {
@@ -147,17 +151,30 @@ public class EntityDrone extends SimEntity implements IMovable,EntityDrone3DRepr
 		HashMap<ArtefactFeatures, ArtefactInit> artefacts = DroneFeature.getScenarioFeatures().getArtefacts();
 		if (artefacts != null) { // pour éviter de Throw un nullPointerException
 			for (Map.Entry<ArtefactFeatures, ArtefactInit> entry : artefacts.entrySet()) {
-				Point3D positionArtefact3d = entry.getValue().getMvtSeqInit().getEtatInitial().getPosition(); //position artefact
+				ArtefactFeatures artefactFeatures = entry.getKey();
+				ArtefactInit artefactInit =entry.getValue();
+				Point3D positionArtefact3d = artefactInit.getMvtSeqInit().getEtatInitial().getPosition(); //position artefact
 				if (isDetectable(positionArtefact3d)) {
 					// stoppez le drone ici et analyzer la cible
-					System.out.println("Artefact trouvé " + entry.getKey().getId() + " position " + positionArtefact3d.toString()); 
-					artefacts.remove(entry.getKey()); //On retire l'objet trouvé
+					//postInterrupt(new interuptPhase(), getCurrentLogicalDate());
+					System.out.println("Artefact trouvé " + artefactFeatures.getId() + " position " + positionArtefact3d.toString()); 
+					if (artefactInit.getType() == 0) {
+						//cible trouvé
+					}else
+						artefacts.remove(artefactFeatures); //On retire l'objet trouvé
 					break;
 				}
-				
 			}
 		}
-		
+	}
+	
+	public class interuptPhase extends SimEvent {
+
+		@Override
+		public void Process() {
+			StaticMover staticMover = new StaticMover(getPosition(), getPosition());
+			Logger.Information(Owner(), "Process FinStaticPhase1", "Phase mouvement linéaire enclenché");
+		}
 	}
 	
 	private boolean isDetectable(Point3D positionArtefact3d) {

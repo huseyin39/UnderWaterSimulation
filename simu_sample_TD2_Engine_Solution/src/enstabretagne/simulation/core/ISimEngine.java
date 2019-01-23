@@ -45,6 +45,9 @@ public interface ISimEngine extends IEngine,ISimulationDateProvider,IScenarioIdP
 	 */
 	void OnEventUnPosted(ISimEvent ev);
 	
+	
+	void OnInterruptPosted(ISimEvent ev);
+	
 	/**
 	 * Cette fonction va initialiser la simulation, provoquer l’instanciation des différentes entités puis leur initialisation.
 	 *

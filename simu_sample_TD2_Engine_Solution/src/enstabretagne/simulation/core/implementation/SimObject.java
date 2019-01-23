@@ -150,6 +150,8 @@ public abstract class SimObject implements ISimObject{
 	      
 	      engine.OnSimObjectRemoved(this);
 	}
+  
+   
 
     /* (non-Javadoc)
      * @see enstabretagne.simulation.core.ISimObject#terminate(boolean)
@@ -271,6 +273,16 @@ public abstract class SimObject implements ISimObject{
 			ISimEvent ev = timeEvents.firstKey();
 			UnPost(ev);
 		}
+	}
+	
+	public void postInterrupt(ISimEvent ev, LogicalDateTime t) {
+		ev.initialize(this, t);
+		Logger.Information(ev.Owner(),"InterruptPost",MessagesSimEngine.PostingAt0, ev.ScheduleDate());
+		for(ISimEvent event: timeEvents.keySet())
+			timeEvents.get(event).ScheduleDate().add(LogicalDuration.ofSeconds(10));
+		timeEvents.put(ev, ev);
+		if (IsActive() && (engine != null))
+		    engine.OnInterruptPosted(ev);
 	}
 
 
