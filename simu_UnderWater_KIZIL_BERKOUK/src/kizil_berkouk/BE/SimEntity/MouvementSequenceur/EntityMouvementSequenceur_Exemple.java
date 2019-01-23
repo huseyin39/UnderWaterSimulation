@@ -43,8 +43,10 @@ public class EntityMouvementSequenceur_Exemple extends EntityMouvementSequenceur
 		switch(NbDrone) {
 		case 1:
 			Post(new FinStaticPhase1(),LogicalDuration.ofSeconds(1));
+			break;
 		case 2:
 			Post(new FinStaticPhase1_2DD2(), LogicalDuration.ofSeconds(1));
+			break;
 			
 		}
 		
@@ -61,25 +63,11 @@ public class EntityMouvementSequenceur_Exemple extends EntityMouvementSequenceur
 			rectilinearMover = new RectilinearMover(d, mv.getPosition(d), ini.getPositionsCles().get("PointCible1"), ini.getMaxLinearSpeed());
 			mv= rectilinearMover;
 			Logger.Information(Owner(), "Process FinStaticPhase1", "Phase mouvement linéaire enclenché");
-			Post(new BugCorrection(),mv.getDurationToReach());
+			Post(new FinLinearPhase1(),mv.getDurationToReach());
 		}
 	}
-	public class BugCorrection extends SimEvent {
-
-		@Override
-		public void Process() {
-			Logger.Information(Owner(), "Process FinCircularPhase3", "Fin de la troisème phase");
-			LogicalDateTime d = getCurrentLogicalDate();
-			Point3D dir = new Point3D(1,1,0);
-			selfRotator = new SelfRotator(d, mv.getPosition(d), mv.getVitesse(d), mv.getPosition(d).add(dir),ini.getMaxSelfRotationSpeed());
-			mv= selfRotator;
-			Logger.Information(Owner(), "Process FinStaticPhase1", "Phase mouvement circulaire enclenché");
-			Post(new FinLinearPhase2(),mv.getDurationToReach());
-			
-		}
-	}
-	//Mouvement circulaire PC2 
-	public class FinLinearPhase2 extends SimEvent {
+	//Circular mover 1
+	public class FinLinearPhase1 extends SimEvent {
 
 		@Override
 		public void Process() {
@@ -144,23 +132,10 @@ public class EntityMouvementSequenceur_Exemple extends EntityMouvementSequenceur
 			rectilinearMover = new RectilinearMover(d, mv.getPosition(d), ini.getPositionsCles().get("PointCible1"), ini.getMaxLinearSpeed());
 			mv= rectilinearMover;
 			Logger.Information(Owner(), "Process FinStaticPhase1", "Phase mouvement linéaire enclenché");
-			Post(new BugCorrection_2DD1(),mv.getDurationToReach());
-		}
-	}
-	public class BugCorrection_2DD1 extends SimEvent {
-
-		@Override
-		public void Process() {
-			Logger.Information(Owner(), "Process FinCircularPhase3", "Fin de la troisème phase");
-			LogicalDateTime d = getCurrentLogicalDate();
-			Point3D dir = new Point3D(1,1,0);
-			selfRotator = new SelfRotator(d, mv.getPosition(d), mv.getVitesse(d), mv.getPosition(d).add(dir),ini.getMaxSelfRotationSpeed());
-			mv= selfRotator;
-			Logger.Information(Owner(), "Process FinStaticPhase1", "Phase mouvement circulaire enclenché");
 			Post(new FinLinearPhase2_2DD1(),mv.getDurationToReach());
-			
 		}
 	}
+
 	//Mouvement circulaire -2DD1 en PC1 et PC2
 		public class FinLinearPhase2_2DD1 extends SimEvent {
 
@@ -187,23 +162,10 @@ public class EntityMouvementSequenceur_Exemple extends EntityMouvementSequenceur
 				rectilinearMover = new RectilinearMover(d, mv.getPosition(d), ini.getPositionsCles().get("PointCible3"), ini.getMaxLinearSpeed());
 				mv= rectilinearMover;
 				Logger.Information(Owner(), "Process FinStaticPhase1", "Phase mouvement linéaire enclenché");
-				Post(new BugCorrection_2DD2(),mv.getDurationToReach());
-			}
-		}
-		public class BugCorrection_2DD2 extends SimEvent {
-
-			@Override
-			public void Process() {
-				Logger.Information(Owner(), "Process FinCircularPhase3", "Fin de la troisème phase");
-				LogicalDateTime d = getCurrentLogicalDate();
-				Point3D dir = new Point3D(1,1,0);
-				selfRotator = new SelfRotator(d, mv.getPosition(d), mv.getVitesse(d), mv.getPosition(d).add(dir),ini.getMaxSelfRotationSpeed());
-				mv= selfRotator;
-				Logger.Information(Owner(), "Process FinStaticPhase1", "Phase mouvement circulaire enclenché");
 				Post(new FinLinearPhase2_2DD2(),mv.getDurationToReach());
-				
 			}
 		}
+
 		//Mouvement circulaire -2DD1 en PC3 et PC4
 			public class FinLinearPhase2_2DD2 extends SimEvent {
 	

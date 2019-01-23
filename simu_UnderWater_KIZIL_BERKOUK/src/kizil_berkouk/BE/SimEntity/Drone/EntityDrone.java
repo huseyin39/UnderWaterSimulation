@@ -25,7 +25,6 @@ import kizil_berkouk.BE.SimEntity.MouvementSequenceur.EntityMouvementSequenceur;
 import kizil_berkouk.BE.SimEntity.MouvementSequenceur.EntityMouvementSequenceur_Exemple;
 import kizil_berkouk.BE.SimEntity.MouvementSequenceur.RectilinearMover;
 import kizil_berkouk.BE.SimEntity.MouvementSequenceur.StaticMover;
-import kizil_berkouk.BE.SimEntity.MouvementSequenceur.EntityMouvementSequenceur_Exemple.BugCorrection;
 import enstabretagne.simulation.components.implementation.SimEntity;
 import enstabretagne.simulation.core.implementation.SimEvent;
 
