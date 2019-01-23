@@ -143,7 +143,7 @@ public class EntityDrone extends SimEntity implements IMovable,EntityDrone3DRepr
 			{
 				LogicalDateTime d = getCurrentLogicalDate();
 				if (d.compareTo(new LogicalDateTime("20/01/2018 06:00")) > 0) {
-
+					System.out.println("Scanning " + getName());
 					if (scan())
 						scheduledPool.shutdownNow();
 					
@@ -155,7 +155,6 @@ public class EntityDrone extends SimEntity implements IMovable,EntityDrone3DRepr
 	}
 	
 	public boolean scan() {
-		System.out.println("Scanning " + getName());
 		HashMap<ArtefactFeatures, ArtefactInit> artefacts = DroneFeature.getScenarioFeatures().getArtefacts();
 		if (artefacts != null) { // pour éviter de Throw un nullPointerException
 			for (Map.Entry<ArtefactFeatures, ArtefactInit> entry : artefacts.entrySet()) {
@@ -165,7 +164,7 @@ public class EntityDrone extends SimEntity implements IMovable,EntityDrone3DRepr
 				
 				if (isDetectable(positionArtefact3d)) {
 					//postInterrupt(new interuptPhase(), getCurrentLogicalDate().add(LogicalDuration.ofSeconds(1)));
-					
+					UnPostAllEvents();
 					if (artefactInit.getType() == 0) {
 						System.out.println("\n ------- Cible trouvé !! " + " Position :" + positionArtefact3d.toString());
 						interruptEngineByDate();
