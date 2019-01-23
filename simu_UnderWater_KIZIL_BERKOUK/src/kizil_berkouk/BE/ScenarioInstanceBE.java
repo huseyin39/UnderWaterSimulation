@@ -283,16 +283,16 @@ public class ScenarioInstanceBE implements IScenarioInstance {
 	}
 
 	public Point3D point3dArtefact() {
-		double x = mRandom.nextUniform(-100, 100);
-		double y = mRandom.nextUniform(-100, 100);
-		double z = mRandom.nextUniform(-30, 0);
+		double x = mRandom.nextUniform(-10000, 10000);
+		double y = mRandom.nextUniform(-10000, 10000);
+		double z = mRandom.nextUniform(-3000, 0);
 		return new Point3D(x, y, z);
 	}
 	
 	public Point3D point3dArtefactCible() {
-		double x = mRandom.nextUniform(-100, 100);// set the value here to be sure that it is under 1 km deep
-		double y = mRandom.nextUniform(-100, 100);
-		double z = mRandom.nextUniform(-30, 0);
+		double x = mRandom.nextUniform(-10000, 10000);// set the value here to be sure that it is under 1 km deep
+		double y = mRandom.nextUniform(-10000, 10000);
+		double z = mRandom.nextUniform(-3000, -2000);
 		return new Point3D(x, y, z);
 	}
 	

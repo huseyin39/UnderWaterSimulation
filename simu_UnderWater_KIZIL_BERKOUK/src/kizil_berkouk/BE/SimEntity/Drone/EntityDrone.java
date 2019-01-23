@@ -143,7 +143,7 @@ public class EntityDrone extends SimEntity implements IMovable,EntityDrone3DRepr
 			}
 		};
 		ScheduledExecutorService scheduledPool = Executors.newScheduledThreadPool(1);
-		scheduledPool.scheduleWithFixedDelay(runnabledelayedTask, 0, 20, TimeUnit.SECONDS);
+		scheduledPool.scheduleWithFixedDelay(runnabledelayedTask, 0, 1, TimeUnit.SECONDS);
 	}
 	
 	public void scan() {
@@ -156,7 +156,7 @@ public class EntityDrone extends SimEntity implements IMovable,EntityDrone3DRepr
 				Point3D positionArtefact3d = artefactInit.getMvtSeqInit().getEtatInitial().getPosition(); //position artefact
 				if (isDetectable(positionArtefact3d)) {
 					// stoppez le drone ici et analyzer la cible
-					//postInterrupt(new interuptPhase(), getCurrentLogicalDate());
+					postInterrupt(new interuptPhase(), getCurrentLogicalDate());
 					System.out.println("Artefact trouvé " + artefactFeatures.getId() + " position " + positionArtefact3d.toString()); 
 					if (artefactInit.getType() == 0) {
 						//cible trouvé
@@ -179,7 +179,7 @@ public class EntityDrone extends SimEntity implements IMovable,EntityDrone3DRepr
 	
 	private boolean isDetectable(Point3D positionArtefact3d) {
 		double distance = getPosition().distance(positionArtefact3d);
-		if (distance < 100)
+		if (distance < 5000)
 			return true;
 		return false;
 		
