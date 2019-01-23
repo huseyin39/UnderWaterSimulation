@@ -61,7 +61,6 @@ public class Scenario extends SimScenario{
 		{
 			Logger.Detail(this, "afteractivate", "drone à créer = %s , %s", e.getValue(),e.getKey());
 			Post(new DroneArrival(e.getValue(),e.getKey()));
-			System.out.println("testtttt : " + listEntityDrones.size());
 
 		}
 		for(Map.Entry<EntityOceanFeature, EntityOceanInit> e : feature.getOcean().entrySet())

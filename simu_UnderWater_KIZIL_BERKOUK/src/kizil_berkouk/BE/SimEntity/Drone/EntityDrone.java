@@ -23,6 +23,7 @@ import kizil_berkouk.BE.SimEntity.Artefact.ArtefactInit;
 import kizil_berkouk.BE.SimEntity.Drone.Representation3D.EntityDrone3DRepresentationInterface;
 import kizil_berkouk.BE.SimEntity.MouvementSequenceur.EntityMouvementSequenceur;
 import kizil_berkouk.BE.SimEntity.MouvementSequenceur.EntityMouvementSequenceur_Exemple;
+import kizil_berkouk.BE.SimEntity.MouvementSequenceur.EntityMouvementSequenceur_Exemple2;
 import kizil_berkouk.BE.SimEntity.MouvementSequenceur.RectilinearMover;
 import kizil_berkouk.BE.SimEntity.MouvementSequenceur.StaticMover;
 import enstabretagne.simulation.components.implementation.SimEntity;
@@ -31,7 +32,7 @@ import enstabretagne.simulation.core.implementation.SimEvent;
 
 @ToRecord(name="Drone")
 public class EntityDrone extends SimEntity implements IMovable,EntityDrone3DRepresentationInterface{
-	
+	private static int nbDrones = 0;
 	private EntityMouvementSequenceur rmv;
 	private EntityDroneInit DroneInit;
 	private EntityDroneFeature DroneFeature;
@@ -49,8 +50,11 @@ public class EntityDrone extends SimEntity implements IMovable,EntityDrone3DRepr
 	@Override
 	protected void initializeSimEntity(SimInitParameters init) {
 		DroneInit = (EntityDroneInit) getInitParameters();
-
-		rmv = (EntityMouvementSequenceur_Exemple) createChild(EntityMouvementSequenceur_Exemple.class, "monSequenceur", ((EntityDroneFeature) getFeatures()).getSeqFeature());
+		if (DroneFeature.getId().equals("Drone1"))
+			rmv = (EntityMouvementSequenceur_Exemple) createChild(EntityMouvementSequenceur_Exemple.class, "monSequenceur", ((EntityDroneFeature) getFeatures()).getSeqFeature());
+		else {
+			rmv = (EntityMouvementSequenceur_Exemple2) createChild(EntityMouvementSequenceur_Exemple2.class, "monSequenceur2", ((EntityDroneFeature) getFeatures()).getSeqFeature());
+		}
 		rmv.initialize(DroneInit.getMvtSeqInitial());
 	
 	}
@@ -164,7 +168,6 @@ public class EntityDrone extends SimEntity implements IMovable,EntityDrone3DRepr
 				
 				if (isDetectable(positionArtefact3d)) {
 					//postInterrupt(new interuptPhase(), getCurrentLogicalDate().add(LogicalDuration.ofSeconds(1)));
-					UnPostAllEvents();
 					if (artefactInit.getType() == 0) {
 						System.out.println("\n ------- Cible trouvé !! " + " Position :" + positionArtefact3d.toString());
 						interruptEngineByDate();
