@@ -156,6 +156,7 @@ public class EntityDrone extends SimEntity implements IMovable,EntityDrone3DRepr
 	
 	public boolean scan() {
 		HashMap<ArtefactFeatures, ArtefactInit> artefacts = DroneFeature.getScenarioFeatures().getArtefacts();
+		
 		if (artefacts != null) { // pour éviter de Throw un nullPointerException
 			for (Map.Entry<ArtefactFeatures, ArtefactInit> entry : artefacts.entrySet()) {
 				ArtefactFeatures artefactFeatures = entry.getKey();
@@ -177,11 +178,13 @@ public class EntityDrone extends SimEntity implements IMovable,EntityDrone3DRepr
 						return false;
 					}
 				}
-				
 			}
 		}
-		return false;
+		return true;
 	}
+	
+	
+	
 	
 	public class interuptPhase extends SimEvent {
 

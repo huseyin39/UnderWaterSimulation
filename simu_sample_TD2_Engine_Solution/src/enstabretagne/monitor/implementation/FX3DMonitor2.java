@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+
 import enstabretagne.base.logger.Logger;
 import enstabretagne.base.time.LogicalDateTime;
 import enstabretagne.base.time.LogicalDuration;
@@ -175,7 +177,7 @@ public class FX3DMonitor2 extends Application implements IMonitor {
 		updateDelay = LogicalDuration.ofSeconds(1.0 / fps);
 
 		requestStop = false;
-		defaultDir = new Point3D(-1,-1,-1).multiply(300);
+		defaultDir = new Point3D(-1,-1,-1).multiply(800);
 		
 		engine = new SimEngine();
 		Logger.setDateProvider(engine);
@@ -410,7 +412,6 @@ public class FX3DMonitor2 extends Application implements IMonitor {
 				Logger.Detail(null, "simuLoop.onCloseRequest", "Fermeture de la boucle de simulation JFX");
 				if (goon) {
 					goon = false;
-
 					arg0.consume();
 				}
 
@@ -419,8 +420,8 @@ public class FX3DMonitor2 extends Application implements IMonitor {
 		});
 
 		root = new Group();
-		double width = 1366;
-		double height = 768;
+		double width = 1500;
+		double height = 800;
 		SubScene subScene = new SubScene(root, width, height, true, SceneAntialiasing.BALANCED);
 
 		AmbientLight light = new AmbientLight();
