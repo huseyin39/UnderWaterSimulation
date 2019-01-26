@@ -628,7 +628,6 @@ public class FX3DMonitor2 extends Application implements IMonitor {
 		IDrawAction act = objectRepresentation.get(obj);
 
 		if (IMovable.class.isAssignableFrom(obj.getClass())) {
-			System.out.println(obj.getName() + "==" + Monitor3DSettings.settings.entiteASuivre);
 			if (obj.getName().equals(Monitor3DSettings.settings.entiteASuivre)) {
 				comboBox.setValue(obj);
 				cb.fire();

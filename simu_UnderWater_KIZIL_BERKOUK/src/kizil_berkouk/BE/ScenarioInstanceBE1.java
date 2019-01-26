@@ -13,16 +13,11 @@ import javafx.geometry.Point3D;
 import javafx.scene.paint.Color;
 import kizil_berkouk.BE.Scenarios.Scenario;
 import kizil_berkouk.BE.Scenarios.ScenarioFeatures;
-import kizil_berkouk.BE.SimEntity.Bateau.BateauFeatures;
-import kizil_berkouk.BE.SimEntity.Bateau.BateauInit;
 import kizil_berkouk.BE.SimEntity.MouvementSequenceur.EntityMouvementSequenceurFeature;
 import kizil_berkouk.BE.SimEntity.MouvementSequenceur.EntityMouvementSequenceurInit;
 import kizil_berkouk.BE.SimEntity.Drone.EntityDroneFeature;
 import kizil_berkouk.BE.SimEntity.Drone.EntityDroneInit;
-import kizil_berkouk.BE.SimEntity.Artefact.ArtefactFeatures;
-import kizil_berkouk.BE.SimEntity.Artefact.ArtefactInit;
-import kizil_berkouk.BE.SimEntity.Ocean.EntityOceanFeature;
-import kizil_berkouk.BE.SimEntity.Ocean.EntityOceanInit;
+
 
 public class ScenarioInstanceBE1 implements IScenarioInstance {
 

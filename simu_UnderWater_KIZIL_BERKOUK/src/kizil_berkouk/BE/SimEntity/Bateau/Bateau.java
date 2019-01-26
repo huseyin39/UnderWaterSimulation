@@ -1,5 +1,7 @@
 package kizil_berkouk.BE.SimEntity.Bateau;
 
+import java.util.List;
+
 import enstabretagne.base.logger.Logger;
 import enstabretagne.base.logger.ToRecord;
 import enstabretagne.monitor.interfaces.IMovable;
@@ -8,15 +10,15 @@ import enstabretagne.simulation.components.data.SimFeatures;
 import enstabretagne.simulation.components.data.SimInitParameters;
 import enstabretagne.simulation.components.implementation.SimEntity;
 import kizil_berkouk.BE.SimEntity.Bateau.Representation3D.IBateauRepresentation3D;
+import kizil_berkouk.BE.SimEntity.Drone.EntityDrone;
 import kizil_berkouk.BE.SimEntity.MouvementSequenceur.EntityMouvementSequenceur;
 import javafx.geometry.Point3D;
 import javafx.scene.paint.Color;
 
 @ToRecord(name="Bouee")
-public class Bateau extends SimEntity implements IMovable,IBateauRepresentation3D{
+public class Bateau extends SimEntity implements IMovable, IBateauRepresentation3D, EntityDrone.droneListener{
 	
-
-	
+	private List<EntityDrone> entityDrones; // to be initialized
 	private EntityMouvementSequenceur rmv;
 
 	public Bateau(String name, SimFeatures features) {
@@ -120,5 +122,12 @@ public class Bateau extends SimEntity implements IMovable,IBateauRepresentation3
 	public Point3D getRotationXYZ() {
 		return rmv.getRotationXYZ(getCurrentLogicalDate());
 	}
+	
+	@Override
+    public void artefactFoundEvent(String myString) {
+        for (EntityDrone eDrone : entityDrones) {
+        	
+        }
+    }
 
 }
