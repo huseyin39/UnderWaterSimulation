@@ -22,7 +22,7 @@ import kizil_berkouk.BE.SimEntity.Artefact.ArtefactFeatures;
 import kizil_berkouk.BE.SimEntity.Artefact.ArtefactInit;
 import kizil_berkouk.BE.SimEntity.Drone.Representation3D.EntityDrone3DRepresentationInterface;
 import kizil_berkouk.BE.SimEntity.MouvementSequenceur.EntityMouvementSequenceur;
-import kizil_berkouk.BE.SimEntity.MouvementSequenceur.EntityMouvementSequenceurKizilBerkouk;
+import kizil_berkouk.BE.SimEntity.MouvementSequenceur.EntityMouvementSequenceurKizilBerkouk1;
 import kizil_berkouk.BE.SimEntity.MouvementSequenceur.EntityMouvementSequenceurKizilBerkouk2;
 import kizil_berkouk.BE.SimEntity.MouvementSequenceur.RectilinearMover;
 import kizil_berkouk.BE.SimEntity.MouvementSequenceur.StaticMover;
@@ -32,7 +32,7 @@ import enstabretagne.simulation.core.implementation.SimEvent;
 
 @ToRecord(name="Drone")
 public class EntityDrone extends SimEntity implements IMovable,EntityDrone3DRepresentationInterface{
-	private static int nbDrones = 0;
+	private static int nbDrones = 1;
 	private EntityMouvementSequenceur rmv;
 	private EntityDroneInit DroneInit;
 	private EntityDroneFeature DroneFeature;
@@ -50,7 +50,7 @@ public class EntityDrone extends SimEntity implements IMovable,EntityDrone3DRepr
 	@Override
 	protected void initializeSimEntity(SimInitParameters init) {
 		DroneInit = (EntityDroneInit) getInitParameters();
-		rmv = (EntityMouvementSequenceurKizilBerkouk) createChild(EntityMouvementSequenceurKizilBerkouk.class, "monSequenceur", ((EntityDroneFeature) getFeatures()).getSeqFeature());
+		rmv = (EntityMouvementSequenceurKizilBerkouk1) createChild(EntityMouvementSequenceurKizilBerkouk1.class, "monSequenceur", ((EntityDroneFeature) getFeatures()).getSeqFeature());
 		rmv.initialize(DroneInit.getMvtSeqInitial());
 	
 	}
