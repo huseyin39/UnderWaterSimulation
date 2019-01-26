@@ -3,15 +3,12 @@ package kizil_berkouk.BE.SimEntity.Drone;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 import enstabretagne.base.logger.Logger;
 import enstabretagne.base.logger.ToRecord;
 import enstabretagne.base.time.LogicalDateTime;
-import enstabretagne.base.time.LogicalDuration;
-import enstabretagne.monitor.implementation.FX3DMonitor2;
 import enstabretagne.monitor.interfaces.IMovable;
 import enstabretagne.simulation.components.IEntity;
 import enstabretagne.simulation.components.data.SimFeatures;
@@ -24,7 +21,9 @@ import kizil_berkouk.BE.SimEntity.Drone.Representation3D.EntityDrone3DRepresenta
 import kizil_berkouk.BE.SimEntity.MouvementSequenceur.EntityMouvementSequenceur;
 import kizil_berkouk.BE.SimEntity.MouvementSequenceur.EntityMouvementSequenceurKizilBerkouk1;
 import kizil_berkouk.BE.SimEntity.MouvementSequenceur.EntityMouvementSequenceurKizilBerkouk2;
-import kizil_berkouk.BE.SimEntity.MouvementSequenceur.RectilinearMover;
+import kizil_berkouk.BE.SimEntity.MouvementSequenceur.EntityMouvementSequenceurKizilBerkouk3;
+import kizil_berkouk.BE.SimEntity.MouvementSequenceur.EntityMouvementSequenceurKizilBerkouk4;
+import kizil_berkouk.BE.SimEntity.MouvementSequenceur.EntityMouvementSequenceurKizilBerkouk5;
 import kizil_berkouk.BE.SimEntity.MouvementSequenceur.StaticMover;
 import enstabretagne.simulation.components.implementation.SimEntity;
 import enstabretagne.simulation.core.implementation.SimEvent;

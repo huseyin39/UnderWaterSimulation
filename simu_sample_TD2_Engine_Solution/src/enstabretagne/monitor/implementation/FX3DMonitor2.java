@@ -803,7 +803,7 @@ public class FX3DMonitor2 extends Application implements IMonitor {
 			e.printStackTrace();
 		}
 		ExperiencePlan xp = new ExperiencePlan(ScenariiSettings.settings.nbRepliques,
-				ScenariiSettings.settings.germeInitial, scens);
+				ScenariiSettings.settings.germeInitial, ScenariiSettings.settings.nombreDrones, scens);
 		loadExperiencePlan(xp);
 	}
 

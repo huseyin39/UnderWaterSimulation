@@ -34,4 +34,7 @@ public interface IExperiencePlan {
 	 */
 	long getInitialSeed();
 	
+	
+	int getNombreDrones();
+	
 }
