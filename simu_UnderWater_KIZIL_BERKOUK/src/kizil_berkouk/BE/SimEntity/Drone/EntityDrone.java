@@ -34,6 +34,7 @@ public class EntityDrone extends SimEntity implements IMovable,EntityDrone3DRepr
 	private EntityMouvementSequenceur rmv;
 	private EntityDroneInit DroneInit;
 	private EntityDroneFeature DroneFeature;
+	private droneListener mListener = null;
 	
 	public EntityDrone(String name, SimFeatures features) {
 		super(name, features);
@@ -42,7 +43,6 @@ public class EntityDrone extends SimEntity implements IMovable,EntityDrone3DRepr
 
 	@Override
 	public void onParentSet() {
-		
 	}
 
 	@Override
@@ -153,6 +153,21 @@ public class EntityDrone extends SimEntity implements IMovable,EntityDrone3DRepr
 	public double getLongueur() {
 		return DroneFeature.getTaille();
 	}
+	
+	public void setMyClassListener(droneListener listener) {
+        this.mListener = listener;
+    }
+	
+	private void sendMessageToBoat() {
+		if (mListener != null) 
+            mListener.artefactFoundEvent("hello");
+	}
+	
+	
+	public interface droneListener {
+        public void artefactFoundEvent(String title);
+    }
+	
 	
 	public void startScan() {
 		ScheduledThreadPoolExecutor scheduledPool = (ScheduledThreadPoolExecutor) Executors.newScheduledThreadPool(1);
