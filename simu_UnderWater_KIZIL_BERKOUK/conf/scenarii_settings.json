@@ -2,10 +2,11 @@
     "germeInitial": 5,
     "nbRepliques":6,
     "scenarioInstanceClassNames": [
-        "kizil_berkouk.BE.ScenarioInstanceBE1",
-        "kizil_berkouk.BE.ScenarioInstanceBE2",
-        "kizil_berkouk.BE.ScenarioInstanceBE3",
-        "kizil_berkouk.BE.ScenarioInstanceBE4",
-        "kizil_berkouk.BE.ScenarioInstanceBE5"
+    	"kizil_berkouk.BE.ScenarioInstanceBE3",
+    	"kizil_berkouk.BE.ScenarioInstanceBE2",
+    	"kizil_berkouk.BE.ScenarioInstanceBE1",
+        "kizil_berkouk.BE.ScenarioInstanceBE5",
+        "kizil_berkouk.BE.ScenarioInstanceBE4"
+        
     ]
 }

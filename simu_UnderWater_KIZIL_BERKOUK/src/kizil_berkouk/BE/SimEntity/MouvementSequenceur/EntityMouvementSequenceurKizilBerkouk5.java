@@ -15,8 +15,7 @@ import kizil_berkouk.BE.ScenarioInstanceBE1;
 
 @ToRecord(name="MouvementSequenceur")
 public class EntityMouvementSequenceurKizilBerkouk5 extends EntityMouvementSequenceur implements IMover{
-	private static int NbDrone = ScenarioInstanceBE1.nbDrone;
-
+	
 	
 	public EntityMouvementSequenceurKizilBerkouk5(String name, SimFeatures features) {
 		super(name, features);
@@ -40,13 +39,13 @@ public class EntityMouvementSequenceurKizilBerkouk5 extends EntityMouvementSeque
 	protected void AfterActivate(IEntity sender, boolean starting) {
 		Logger.Detail(this, "AfterActivate", "Activation de MouvementSequenceur");
 		//attente
-		
-		
-		
+		Post(new FinStaticPhase2(), LogicalDuration.ofSeconds(1));
+		Post(new FinCircularPhase3(), LogicalDuration.ofMinutes(10));
+		Post(new FinStaticPhase4(), LogicalDuration.ofMinutes(20));
+		Post(new FinStaticPhase5(), LogicalDuration.ofMinutes(30));
+		Post(new FinStaticPhase1(), LogicalDuration.ofMinutes(40));
 	}
 	
-	//DESCRIPTION COMPORTEMENT SCENARIO 1 DRONE	
-	//Ligne droite drone 1 
 	public class FinStaticPhase1 extends SimEvent {
 
 		@Override
@@ -56,10 +55,34 @@ public class EntityMouvementSequenceurKizilBerkouk5 extends EntityMouvementSeque
 			rectilinearMover = new RectilinearMover(d, mv.getPosition(d), ini.getPositionsCles().get("PointCible1"), ini.getMaxLinearSpeed());
 			mv= rectilinearMover;
 			Logger.Information(Owner(), "Process FinStaticPhase1", "Phase mouvement linéaire enclenché");
+			Post(new FinStaticPhase1b(),mv.getDurationToReach());
+		}
+	}
+	public class FinStaticPhase1b extends SimEvent {
+
+		@Override
+		public void Process() {
+			Logger.Information(Owner(), "Process FinStaticPhase1", "Fin de la première phase statique");
+			LogicalDateTime d = getCurrentLogicalDate();
+			rectilinearMover = new RectilinearMover(d, mv.getPosition(d), ini.getPositionsCles().get("PointCible1b"), ini.getMaxLinearSpeed());
+			mv= rectilinearMover;
+			Logger.Information(Owner(), "Process FinStaticPhase1", "Phase mouvement linéaire enclenché");
+			Post(new Arret(),mv.getDurationToReach());
+		}
+	}
+
+	public class FinStaticPhase2 extends SimEvent {
+
+		@Override
+		public void Process() {
+			Logger.Information(Owner(), "Process FinStaticPhase1", "Fin de la première phase statique");
+			LogicalDateTime d = getCurrentLogicalDate();
+			rectilinearMover = new RectilinearMover(d, mv.getPosition(d), ini.getPositionsCles().get("PointCible2b"), ini.getMaxLinearSpeed());
+			mv= rectilinearMover;
+			Logger.Information(Owner(), "Process FinStaticPhase1", "Phase mouvement linéaire enclenché");
 			Post(new FinLinearPhase1(),mv.getDurationToReach());
 		}
 	}
-	//Circular mover 1
 	public class FinLinearPhase1 extends SimEvent {
 
 		@Override
@@ -69,10 +92,9 @@ public class EntityMouvementSequenceurKizilBerkouk5 extends EntityMouvementSeque
 			circulrMover = new CircularMover(d, mv.getPosition(d), mv.getVitesse(d).normalize().multiply(ini.getMaxLinearSpeed()), ini.getPositionsCles().get("PointCible2"));
 			mv= circulrMover;
 			Logger.Information(Owner(), "Process FinStaticPhase1", "Phase mouvement circulaire enclenché");
-			Post(new FinCircularPhase3(),mv.getDurationToReach());
+			Post(new Arret(),mv.getDurationToReach());
 		}
 	}
-	//Mouvement rectiligne PC3
 	public class FinCircularPhase3 extends SimEvent {
 
 		@Override
@@ -82,8 +104,21 @@ public class EntityMouvementSequenceurKizilBerkouk5 extends EntityMouvementSeque
 			rectilinearMover = new RectilinearMover(d, mv.getPosition(d), ini.getPositionsCles().get("PointCible3"), ini.getMaxLinearSpeed());
 			mv= rectilinearMover;
 			Logger.Information(Owner(), "Process FinStaticPhase1", "Phase mouvement linéaire enclenché");
-			Post(new FinLinearPhase4(),mv.getDurationToReach());
+			Post(new Arret(),mv.getDurationToReach());
 			
+		}
+	}
+	
+	public class FinStaticPhase4 extends SimEvent {
+
+		@Override
+		public void Process() {
+			Logger.Information(Owner(), "Process FinStaticPhase1", "Fin de la première phase statique");
+			LogicalDateTime d = getCurrentLogicalDate();
+			rectilinearMover = new RectilinearMover(d, mv.getPosition(d), ini.getPositionsCles().get("PointCible4b"), ini.getMaxLinearSpeed());
+			mv= rectilinearMover;
+			Logger.Information(Owner(), "Process FinStaticPhase1", "Phase mouvement linéaire enclenché");
+			Post(new FinLinearPhase4(),mv.getDurationToReach());
 		}
 	}
 	//Mouvement criculaire PC4
@@ -96,10 +131,10 @@ public class EntityMouvementSequenceurKizilBerkouk5 extends EntityMouvementSeque
 			circulrMover = new CircularMover(d, mv.getPosition(d), mv.getVitesse(d).normalize().multiply(ini.getMaxLinearSpeed()), ini.getPositionsCles().get("PointCible4"));
 			mv= circulrMover;
 			Logger.Information(Owner(), "Process FinStaticPhase1", "Phase mouvement circulaire enclenché");
-			Post(new FinCircularPhase5(),mv.getDurationToReach());
+			Post(new Arret(),mv.getDurationToReach());
 		}
 	}
-	public class FinCircularPhase5 extends SimEvent {
+	public class FinStaticPhase5 extends SimEvent {
 
 		@Override
 		public void Process() {
@@ -108,12 +143,24 @@ public class EntityMouvementSequenceurKizilBerkouk5 extends EntityMouvementSeque
 			rectilinearMover = new RectilinearMover(d, mv.getPosition(d), ini.getPositionsCles().get("PointCible5"), ini.getMaxLinearSpeed());
 			mv= rectilinearMover;
 			Logger.Information(Owner(), "Process FinStaticPhase1", "Phase mouvement linéaire enclenché");
-			Post(new Arret(),mv.getDurationToReach());
+			Post(new FinLinearPhase5(),mv.getDurationToReach());
 			
 		}
 	}
 	
-	
+	public class FinLinearPhase5 extends SimEvent {
+
+		@Override
+		public void Process() {
+			Logger.Information(Owner(), "Process FinCircularPhase5", "Fin de la cinquième phase");
+			LogicalDateTime d = getCurrentLogicalDate();
+			rectilinearMover = new RectilinearMover(d, mv.getPosition(d), ini.getPositionsCles().get("PointCible5b"), ini.getMaxLinearSpeed());
+			mv= rectilinearMover;
+			Logger.Information(Owner(), "Process FinStaticPhase1", "Phase mouvement linéaire enclenché");
+			Post(new Arret(),mv.getDurationToReach());
+			
+		}
+	}
 	
 
 //	public class FinSelfRotatePhase4 extends SimEvent {
@@ -206,6 +253,7 @@ public class EntityMouvementSequenceurKizilBerkouk5 extends EntityMouvementSeque
 			staticMover =new StaticMover(mv.getPosition(d), mv.getVitesse(d));			
 			Logger.Information(Owner(), "Process Arret", "Mode arrêt : %s", mv.getPosition(d));
 			mv = staticMover;
+			System.out.println(getCurrentLogicalDate() + "  --  " + ini.getPositionsCles());
 		}
 		
 	}
