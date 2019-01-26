@@ -24,6 +24,8 @@ public class RectilinearMover implements IMover{
 	public RectilinearMover(LogicalDateTime d, Point3D posInit, Point3D target, double vIni) {
 		
 		this.target = target;
+		System.out.println(posInit);
+		System.out.println(target);
 		direction = target.subtract(posInit);
 
 
