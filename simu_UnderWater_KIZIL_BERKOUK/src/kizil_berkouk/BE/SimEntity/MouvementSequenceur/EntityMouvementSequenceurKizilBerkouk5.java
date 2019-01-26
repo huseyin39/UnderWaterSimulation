@@ -14,12 +14,15 @@ import javafx.scene.transform.Rotate;
 import kizil_berkouk.BE.ScenarioInstanceBE1;
 
 @ToRecord(name="MouvementSequenceur")
-public class EntityMouvementSequenceurKizilBerkouk extends EntityMouvementSequenceur implements IMover{
+public class EntityMouvementSequenceurKizilBerkouk5 extends EntityMouvementSequenceur implements IMover{
 	private static int NbDrone = ScenarioInstanceBE1.nbDrone;
 
 	
-	public EntityMouvementSequenceurKizilBerkouk(String name, SimFeatures features) {
+	public EntityMouvementSequenceurKizilBerkouk5(String name, SimFeatures features) {
 		super(name, features);
+		
+		
+		
 	}
 
 	@Override
@@ -38,18 +41,7 @@ public class EntityMouvementSequenceurKizilBerkouk extends EntityMouvementSequen
 		Logger.Detail(this, "AfterActivate", "Activation de MouvementSequenceur");
 		//attente
 		
-		switch(NbDrone) {
-		case 1:
-			Post(new FinStaticPhase1(),LogicalDuration.ofSeconds(1));
-			break;
-		case 2:
-			Post(new FinStaticPhase1_2DD1(), LogicalDuration.ofSeconds(1));
-			Post(new FinCircularPhase3_2DD2(), LogicalDuration.ofSeconds(1));
-			break;
-		case 3 :
-			Post(new FinStaticPhase1_3DD1(), LogicalDuration.ofSeconds(1));
-			break;
-		}
+		
 		
 	}
 	
@@ -120,171 +112,9 @@ public class EntityMouvementSequenceurKizilBerkouk extends EntityMouvementSequen
 			
 		}
 	}
-	//FIN SCENARIO 1 DRONE
 	
-	//TRAJECTOIRE  DRONE 1 SCENARIO 2 DRONES 
-	//LIGNE DROITE D1 SCENARIO 2D
-	public class FinStaticPhase1_2DD1 extends SimEvent {
-
-		@Override
-		public void Process() {
-			Logger.Information(Owner(), "Process FinStaticPhase1", "Fin de la première phase statique");
-			LogicalDateTime d = getCurrentLogicalDate();
-			rectilinearMover = new RectilinearMover(d, mv.getPosition(d), ini.getPositionsCles().get("PointCible1"), ini.getMaxLinearSpeed());
-			mv= rectilinearMover;
-			Logger.Information(Owner(), "Process FinStaticPhase1", "Phase mouvement linéaire enclenché");
-			Post(new FinLinearPhase2_2DD1(),mv.getDurationToReach());
-		}
-	}
-
-	//Mouvement circulaire -2DD1 en PC1 et PC2
-		public class FinLinearPhase2_2DD1 extends SimEvent {
-
-			@Override
-			public void Process() {
-				Logger.Information(Owner(), "Process FinLinearPhase2", "Fin de la deuxième phase");
-				LogicalDateTime d = getCurrentLogicalDate();
-				circulrMover = new CircularMover(d, mv.getPosition(d), mv.getVitesse(d).normalize().multiply(ini.getMaxLinearSpeed()), ini.getPositionsCles().get("PointCible2"));
-				mv= circulrMover;
-				Logger.Information(Owner(), "Process FinStaticPhase1", "Phase mouvement circulaire enclenché");
-				Post(new Arret(),mv.getDurationToReach());
-				
-			}
-		}
 	
-		//FIN DE PARCOURS DRONE 1 SCENARIO A 2 DRONES
-		
-		//TRAJECTOIRE DRONE 2 SCENARIO A 2 DRONES
-		//Mouvement rectiligne PC3
-		public class FinCircularPhase3_2DD2 extends SimEvent {
-
-			@Override
-			public void Process() {
-				Logger.Information(Owner(), "Process FinCircularPhase3", "Fin de la troisème phase");
-				LogicalDateTime d = getCurrentLogicalDate();
-				rectilinearMover = new RectilinearMover(d, mv.getPosition(d), ini.getPositionsCles().get("PointCible3"), ini.getMaxLinearSpeed());
-				mv= rectilinearMover;
-				Logger.Information(Owner(), "Process FinStaticPhase1", "Phase mouvement linéaire enclenché");
-				Post(new FinLinearPhase4_2DD2(),mv.getDurationToReach());
-				
-			}
-		}
-		//Mouvement criculaire PC4
-		public class FinLinearPhase4_2DD2 extends SimEvent {
-
-			@Override
-			public void Process() {
-				Logger.Information(Owner(), "Process FinLinearPhase4", "Fin de la quatrième phase");
-				LogicalDateTime d = getCurrentLogicalDate();
-				circulrMover = new CircularMover(d, mv.getPosition(d), mv.getVitesse(d).normalize().multiply(ini.getMaxLinearSpeed()), ini.getPositionsCles().get("PointCible4"));
-				mv= circulrMover;
-				Logger.Information(Owner(), "Process FinStaticPhase1", "Phase mouvement circulaire enclenché");
-				Post(new FinCircularPhase5_2DD2(),mv.getDurationToReach());
-			}
-		}
-		public class FinCircularPhase5_2DD2 extends SimEvent {
-
-			@Override
-			public void Process() {
-				Logger.Information(Owner(), "Process FinCircularPhase5", "Fin de la cinquième phase");
-				LogicalDateTime d = getCurrentLogicalDate();
-				rectilinearMover = new RectilinearMover(d, mv.getPosition(d), ini.getPositionsCles().get("PointCible5"), ini.getMaxLinearSpeed());
-				mv= rectilinearMover;
-				Logger.Information(Owner(), "Process FinStaticPhase1", "Phase mouvement linéaire enclenché");
-				Post(new Arret(),mv.getDurationToReach());
-				
-			}
-		}
-//		public class FinStaticPhase1_2DD2 extends SimEvent {
-//
-//			@Override
-//			public void Process() {
-//				Logger.Information(Owner(), "Process FinStaticPhase1", "Fin de la première phase statique");
-//				LogicalDateTime d = getCurrentLogicalDate();
-//				rectilinearMover = new RectilinearMover(d, mv.getPosition(d), ini.getPositionsCles().get("PointCible3"), ini.getMaxLinearSpeed());
-//				mv= rectilinearMover;
-//				Logger.Information(Owner(), "Process FinStaticPhase1", "Phase mouvement linéaire enclenché");
-//				Post(new FinLinearPhase2_2DD2(),mv.getDurationToReach());
-//			}
-//		}
-
-
-//FIN SCENARIO 2DRONES
 	
-	//SCENARIO 3 DRONES
-			//DRONE 1
-			public class FinStaticPhase1_3DD1 extends SimEvent {
-
-				@Override
-				public void Process() {
-					Logger.Information(Owner(), "Process FinStaticPhase1", "Fin de la première phase statique");
-					LogicalDateTime d = getCurrentLogicalDate();
-					rectilinearMover = new RectilinearMover(d, mv.getPosition(d), ini.getPositionsCles().get("PointCible1"), ini.getMaxLinearSpeed());
-					mv= rectilinearMover;
-					Logger.Information(Owner(), "Process FinStaticPhase1", "Phase mouvement linéaire enclenché");
-					Post(new FinLinearPhase2_3DD1(),mv.getDurationToReach());
-				}
-			}
-			public class FinLinearPhase2_3DD1 extends SimEvent {
-
-				@Override
-				public void Process() {
-					Logger.Information(Owner(), "Process FinLinearPhase2", "Fin de la deuxième phase");
-					LogicalDateTime d = getCurrentLogicalDate();
-					circulrMover = new CircularMover(d, mv.getPosition(d), mv.getVitesse(d).normalize().multiply(ini.getMaxLinearSpeed()), ini.getPositionsCles().get("PointCible2"));
-					mv= circulrMover;
-					Logger.Information(Owner(), "Process FinStaticPhase1", "Phase mouvement circulaire enclenché");
-					Post(new FinStaticCircular1_3DD2(),mv.getDurationToReach());
-					
-					
-					
-				}
-			}
-
-//DRONE 2
-			public class FinStaticCircular1_3DD2 extends SimEvent {
-
-				@Override
-				public void Process() {
-					Logger.Information(Owner(), "Process FinStaticPhase1", "Fin de la première phase statique");
-					LogicalDateTime d = getCurrentLogicalDate();
-					rectilinearMover = new RectilinearMover(d, mv.getPosition(d), ini.getPositionsCles().get("PointCible3"), ini.getMaxLinearSpeed());
-					mv= rectilinearMover;
-					Logger.Information(Owner(), "Process FinStaticPhase1", "Phase mouvement linéaire enclenché");
-					Post(new FinLinearPhase2_3DD2(),mv.getDurationToReach());
-				}
-			}
-
-			//Mouvement circulaire -2DD1 en PC3 et PC4
-				public class FinLinearPhase2_3DD2 extends SimEvent {
-		
-					@Override
-					public void Process() {
-						Logger.Information(Owner(), "Process FinLinearPhase2", "Fin de la deuxième phase");
-						LogicalDateTime d = getCurrentLogicalDate();
-						circulrMover = new CircularMover(d, mv.getPosition(d), mv.getVitesse(d).normalize().multiply(ini.getMaxLinearSpeed()), ini.getPositionsCles().get("PointCible4"));
-						mv= circulrMover;
-						Logger.Information(Owner(), "Process FinStaticPhase1", "Phase mouvement circulaire enclenché");
-						Post(new FinCircularPhase3_3DD3(),mv.getDurationToReach());
-						Post(new Arret(), mv.getDurationToReach());
-				}
-			}
-			
-	//DRONE 3
-				//Mouvement rectiligne entre PC4 et PC5
-				public class FinCircularPhase3_3DD3 extends SimEvent {
-
-					@Override
-					public void Process() {
-						Logger.Information(Owner(), "Process FinCircularPhase3", "Fin de la troisème phase");
-						LogicalDateTime d = getCurrentLogicalDate();
-						rectilinearMover = new RectilinearMover(d, mv.getPosition(d), ini.getPositionsCles().get("PointCible5"), ini.getMaxLinearSpeed());
-						mv= rectilinearMover;
-						Logger.Information(Owner(), "Process FinStaticPhase1", "Phase mouvement linéaire enclenché");
-						Post(new Arret(),mv.getDurationToReach());
-						
-					}
-				}
 
 //	public class FinSelfRotatePhase4 extends SimEvent {
 //

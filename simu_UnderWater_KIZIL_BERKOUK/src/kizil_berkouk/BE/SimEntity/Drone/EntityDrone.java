@@ -22,7 +22,7 @@ import kizil_berkouk.BE.SimEntity.Artefact.ArtefactFeatures;
 import kizil_berkouk.BE.SimEntity.Artefact.ArtefactInit;
 import kizil_berkouk.BE.SimEntity.Drone.Representation3D.EntityDrone3DRepresentationInterface;
 import kizil_berkouk.BE.SimEntity.MouvementSequenceur.EntityMouvementSequenceur;
-import kizil_berkouk.BE.SimEntity.MouvementSequenceur.EntityMouvementSequenceurKizilBerkouk;
+import kizil_berkouk.BE.SimEntity.MouvementSequenceur.EntityMouvementSequenceurKizilBerkouk1;
 import kizil_berkouk.BE.SimEntity.MouvementSequenceur.EntityMouvementSequenceurKizilBerkouk2;
 import kizil_berkouk.BE.SimEntity.MouvementSequenceur.RectilinearMover;
 import kizil_berkouk.BE.SimEntity.MouvementSequenceur.StaticMover;
