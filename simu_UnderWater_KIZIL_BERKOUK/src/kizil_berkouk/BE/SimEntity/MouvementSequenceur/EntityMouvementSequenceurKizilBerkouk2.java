@@ -40,7 +40,11 @@ public class EntityMouvementSequenceurKizilBerkouk2 extends EntityMouvementSeque
 		Logger.Detail(this, "AfterActivate", "Activation de MouvementSequenceur");
 		//attente
 		Post(new FinStaticPhase1_2DD1(), LogicalDuration.ofSeconds(1));
+<<<<<<< HEAD
 		Post(new FinStaticPhase1_2DD2(), LogicalDuration.ofMinutes(10));
+=======
+		Post(new FinStaticPhase1_2DD2(), LogicalDuration.ofSeconds(1));
+>>>>>>> refs/remotes/origin/master
 	}
 	
 	/*Drone 1*/

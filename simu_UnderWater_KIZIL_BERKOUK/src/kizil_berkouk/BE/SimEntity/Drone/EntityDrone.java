@@ -3,15 +3,12 @@ package kizil_berkouk.BE.SimEntity.Drone;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 import enstabretagne.base.logger.Logger;
 import enstabretagne.base.logger.ToRecord;
 import enstabretagne.base.time.LogicalDateTime;
-import enstabretagne.base.time.LogicalDuration;
-import enstabretagne.monitor.implementation.FX3DMonitor2;
 import enstabretagne.monitor.interfaces.IMovable;
 import enstabretagne.simulation.components.IEntity;
 import enstabretagne.simulation.components.data.SimFeatures;
@@ -27,7 +24,7 @@ import kizil_berkouk.BE.SimEntity.MouvementSequenceur.EntityMouvementSequenceurK
 import kizil_berkouk.BE.SimEntity.MouvementSequenceur.EntityMouvementSequenceurKizilBerkouk3;
 import kizil_berkouk.BE.SimEntity.MouvementSequenceur.EntityMouvementSequenceurKizilBerkouk4;
 import kizil_berkouk.BE.SimEntity.MouvementSequenceur.EntityMouvementSequenceurKizilBerkouk5;
-import kizil_berkouk.BE.SimEntity.MouvementSequenceur.RectilinearMover;
+
 import kizil_berkouk.BE.SimEntity.MouvementSequenceur.StaticMover;
 import enstabretagne.simulation.components.implementation.SimEntity;
 import enstabretagne.simulation.core.implementation.SimEvent;
@@ -35,7 +32,7 @@ import enstabretagne.simulation.core.implementation.SimEvent;
 
 @ToRecord(name="Drone")
 public class EntityDrone extends SimEntity implements IMovable,EntityDrone3DRepresentationInterface{
-	// static int nbDrones = 1;
+
 	private EntityMouvementSequenceur rmv;
 	private EntityDroneInit DroneInit;
 	private EntityDroneFeature DroneFeature;
@@ -53,7 +50,30 @@ public class EntityDrone extends SimEntity implements IMovable,EntityDrone3DRepr
 	@Override
 	protected void initializeSimEntity(SimInitParameters init) {
 		DroneInit = (EntityDroneInit) getInitParameters();
-		rmv = (EntityMouvementSequenceurKizilBerkouk3) createChild(EntityMouvementSequenceurKizilBerkouk3.class, "monSequenceur", ((EntityDroneFeature) getFeatures()).getSeqFeature());
+		String scenario = DroneInit.getMvtSeqInitial().getName();
+		switch (scenario) {
+		case "MSI1Drone":
+			rmv = (EntityMouvementSequenceurKizilBerkouk1) createChild(EntityMouvementSequenceurKizilBerkouk1.class, "monSequenceur", ((EntityDroneFeature) getFeatures()).getSeqFeature());
+			break;
+		case "MSI2Drones":
+			rmv = (EntityMouvementSequenceurKizilBerkouk2) createChild(EntityMouvementSequenceurKizilBerkouk2.class, "monSequenceur", ((EntityDroneFeature) getFeatures()).getSeqFeature());
+			break;
+		case "MSI3Drones":
+			rmv = (EntityMouvementSequenceurKizilBerkouk3) createChild(EntityMouvementSequenceurKizilBerkouk3.class, "monSequenceur", ((EntityDroneFeature) getFeatures()).getSeqFeature());
+			break;
+			
+		case "MSI4Drones":
+			rmv = (EntityMouvementSequenceurKizilBerkouk4) createChild(EntityMouvementSequenceurKizilBerkouk4.class, "monSequenceur", ((EntityDroneFeature) getFeatures()).getSeqFeature());
+			break;
+		
+		case "MSI5Drones":
+			rmv = (EntityMouvementSequenceurKizilBerkouk5) createChild(EntityMouvementSequenceurKizilBerkouk5.class, "monSequenceur", ((EntityDroneFeature) getFeatures()).getSeqFeature());
+			break;	
+			
+		default:
+			break;
+		}
+		
 		rmv.initialize(DroneInit.getMvtSeqInitial());
 	
 	}

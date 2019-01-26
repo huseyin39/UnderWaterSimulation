@@ -768,16 +768,16 @@ public class FX3DMonitor2 extends Application implements IMonitor {
 	public void loadExperiencePlanFromSettings() {
 		List<IScenario> scens = new ArrayList<>();
 		try {
-			for (String s : ScenariiSettings.settings.scenarioInstanceClassNames) {
-				Class<?> c = Class.forName(s);
-				if (IScenarioInstance.class.isAssignableFrom(c)) {
-					IScenarioInstance scenI = (IScenarioInstance) c.getConstructor().newInstance();
-					IScenario scen = scenI.getScenarioInstance();
-					Logger.Detail(null, "loadExperiencePlanFromSettings", "Scénario trouvé : " + scen.getName());
-					scens.add(scen);
-				} else {
-					Logger.Fatal(null, "loadExperiencePlanFromSettings", ScenariiMessages.ScenariiNotAScenario);
-				}
+			int nombreDrones = ScenariiSettings.settings.nombreDrones;
+			String s = ScenariiSettings.settings.scenarioInstanceClassNames.get(nombreDrones-1);
+			Class<?> c = Class.forName(s);
+			if (IScenarioInstance.class.isAssignableFrom(c)) {
+				IScenarioInstance scenI = (IScenarioInstance) c.getConstructor().newInstance();
+				IScenario scen = scenI.getScenarioInstance();
+				Logger.Detail(null, "loadExperiencePlanFromSettings", "Scénario trouvé : " + scen.getName());
+				scens.add(scen);
+			} else {
+				Logger.Fatal(null, "loadExperiencePlanFromSettings", ScenariiMessages.ScenariiNotAScenario);
 			}
 
 		} catch (ClassNotFoundException e) {
@@ -803,7 +803,7 @@ public class FX3DMonitor2 extends Application implements IMonitor {
 			e.printStackTrace();
 		}
 		ExperiencePlan xp = new ExperiencePlan(ScenariiSettings.settings.nbRepliques,
-				ScenariiSettings.settings.germeInitial, scens);
+				ScenariiSettings.settings.germeInitial, ScenariiSettings.settings.nombreDrones, scens);
 		loadExperiencePlan(xp);
 	}
 

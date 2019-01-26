@@ -24,6 +24,9 @@ public class ExperiencePlan implements IExperiencePlan {
 	/** The initial seed. */
 	private long initialSeed;
 	
+	/** The number of drones**/
+	private int nombreDrones;
+	
 	/**
 	 * Instantiates a new experience plan.
 	 *
@@ -31,10 +34,10 @@ public class ExperiencePlan implements IExperiencePlan {
 	 * @param initialSeed the initial seed
 	 * @param listeScenarios the liste scenarios
 	 */
-	public ExperiencePlan(long nombreRepliques, long initialSeed,IScenario... listeScenarios) {
+	public ExperiencePlan(long nombreRepliques, long initialSeed, int nombreDrones ,IScenario... listeScenarios) {
 		super();
 		this.nombreRepliques = nombreRepliques;
-		
+		this.nombreDrones = nombreDrones;
 		this.listeScenarios = Arrays.asList(listeScenarios);
 		this.initialSeed = initialSeed;
 	}
@@ -46,11 +49,12 @@ public class ExperiencePlan implements IExperiencePlan {
 	 * @param initialSeed the initial seed
 	 * @param listeScenarios the liste scenarios
 	 */
-	public ExperiencePlan(long nombreRepliques,long initialSeed,List<IScenario> listeScenarios) {
+	public ExperiencePlan(long nombreRepliques,long initialSeed, int nombreDrones, List<IScenario> listeScenarios) {
 		super();
 		this.nombreRepliques = nombreRepliques;
 		this.listeScenarios = listeScenarios;
 		this.initialSeed = initialSeed;
+		this.nombreDrones = nombreDrones;
 	}
 
 	/* (non-Javadoc)
@@ -76,5 +80,12 @@ public class ExperiencePlan implements IExperiencePlan {
 	public long getInitialSeed() {
 		return initialSeed;
 	}
+	
+	@Override
+	public int getNombreDrones() {
+		return nombreDrones;
+	}
+	
+	
 
 }

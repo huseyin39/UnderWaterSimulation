@@ -46,6 +46,7 @@ public class ScenariiSettings {
 	public long nbRepliques;
 	public long germeInitial;
 	public List<String> scenarioInstanceClassNames;
+	public int nombreDrones;
 	
 	public ScenariiSettings()
 	{
