@@ -24,7 +24,7 @@ import kizil_berkouk.BE.SimEntity.Artefact.ArtefactInit;
 import kizil_berkouk.BE.SimEntity.Ocean.EntityOceanFeature;
 import kizil_berkouk.BE.SimEntity.Ocean.EntityOceanInit;
 
-public class ScenarioInstanceBE implements IScenarioInstance {
+public class ScenarioInstanceBE1 implements IScenarioInstance {
 	MoreRandom mRandom = new MoreRandom();
 	public static int nbDrone = 2;
 
@@ -296,7 +296,4 @@ public class ScenarioInstanceBE implements IScenarioInstance {
 		double z = mRandom.nextUniform(-3000, -2000);
 		return new Point3D(x, y, z);
 	}
-	
-
-
 }

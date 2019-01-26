@@ -11,15 +11,18 @@ import enstabretagne.simulation.components.data.SimInitParameters;
 import enstabretagne.simulation.core.implementation.SimEvent;
 import javafx.geometry.Point3D;
 import javafx.scene.transform.Rotate;
-import kizil_berkouk.BE.ScenarioInstanceBE;
+import kizil_berkouk.BE.ScenarioInstanceBE1;
 
 @ToRecord(name="MouvementSequenceur")
-public class EntityMouvementSequenceur_Exemple extends EntityMouvementSequenceur implements IMover{
-	private static int NbDrone = ScenarioInstanceBE.nbDrone;
+public class EntityMouvementSequenceurKizilBerkouk2 extends EntityMouvementSequenceur implements IMover{
+	private static int NbDrone = ScenarioInstanceBE1.nbDrone;
 
 	
-	public EntityMouvementSequenceur_Exemple(String name, SimFeatures features) {
+	public EntityMouvementSequenceurKizilBerkouk2(String name, SimFeatures features) {
 		super(name, features);
+		
+		
+		
 	}
 
 	@Override
@@ -43,7 +46,6 @@ public class EntityMouvementSequenceur_Exemple extends EntityMouvementSequenceur
 			Post(new FinStaticPhase1(),LogicalDuration.ofSeconds(1));
 			break;
 		case 2:
-			Post(new FinStaticPhase1_2DD1(), LogicalDuration.ofSeconds(1));
 			Post(new FinCircularPhase3_2DD2(), LogicalDuration.ofSeconds(1));
 			break;
 		case 3 :
@@ -148,6 +150,7 @@ public class EntityMouvementSequenceur_Exemple extends EntityMouvementSequenceur
 				mv= circulrMover;
 				Logger.Information(Owner(), "Process FinStaticPhase1", "Phase mouvement circulaire enclenché");
 				Post(new Arret(),mv.getDurationToReach());
+				Post(new FinCircularPhase3_2DD2(), mv.getDurationToReach());
 				
 			}
 		}
