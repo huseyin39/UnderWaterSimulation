@@ -32,7 +32,6 @@ import enstabretagne.simulation.core.implementation.SimEvent;
 
 @ToRecord(name="Drone")
 public class EntityDrone extends SimEntity implements IMovable,EntityDrone3DRepresentationInterface{
-	private static int nbDrones = 0;
 	private EntityMouvementSequenceur rmv;
 	private EntityDroneInit DroneInit;
 	private EntityDroneFeature DroneFeature;
@@ -50,7 +49,30 @@ public class EntityDrone extends SimEntity implements IMovable,EntityDrone3DRepr
 	@Override
 	protected void initializeSimEntity(SimInitParameters init) {
 		DroneInit = (EntityDroneInit) getInitParameters();
-		rmv = (EntityMouvementSequenceurKizilBerkouk) createChild(EntityMouvementSequenceurKizilBerkouk.class, "monSequenceur", ((EntityDroneFeature) getFeatures()).getSeqFeature());
+		String scenario = DroneInit.getMvtSeqInitial().getName();
+		switch (scenario) {
+		case "MSI1Drone":
+			rmv = (EntityMouvementSequenceurKizilBerkouk1) createChild(EntityMouvementSequenceurKizilBerkouk1.class, "monSequenceur", ((EntityDroneFeature) getFeatures()).getSeqFeature());
+			break;
+		case "MSI2Drones":
+			rmv = (EntityMouvementSequenceurKizilBerkouk2) createChild(EntityMouvementSequenceurKizilBerkouk2.class, "monSequenceur", ((EntityDroneFeature) getFeatures()).getSeqFeature());
+			break;
+		case "MSI3Drones":
+			rmv = (EntityMouvementSequenceurKizilBerkouk3) createChild(EntityMouvementSequenceurKizilBerkouk3.class, "monSequenceur", ((EntityDroneFeature) getFeatures()).getSeqFeature());
+			break;
+			
+		case "MSI4Drones":
+			rmv = (EntityMouvementSequenceurKizilBerkouk4) createChild(EntityMouvementSequenceurKizilBerkouk4.class, "monSequenceur", ((EntityDroneFeature) getFeatures()).getSeqFeature());
+			break;
+		
+		case "MSI5Drones":
+			rmv = (EntityMouvementSequenceurKizilBerkouk5) createChild(EntityMouvementSequenceurKizilBerkouk5.class, "monSequenceur", ((EntityDroneFeature) getFeatures()).getSeqFeature());
+			break;	
+			
+		default:
+			break;
+		}
+		
 		rmv.initialize(DroneInit.getMvtSeqInitial());
 	
 	}
