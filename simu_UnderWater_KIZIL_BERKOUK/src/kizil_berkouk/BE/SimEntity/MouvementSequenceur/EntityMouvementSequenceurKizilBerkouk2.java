@@ -40,7 +40,11 @@ public class EntityMouvementSequenceurKizilBerkouk2 extends EntityMouvementSeque
 		Logger.Detail(this, "AfterActivate", "Activation de MouvementSequenceur");
 		//attente
 		Post(new FinStaticPhase1_2DD1(), LogicalDuration.ofSeconds(1));
+<<<<<<< HEAD
+		Post(new FinStaticPhase1_2DD2(), LogicalDuration.ofMinutes(10));
+=======
 		Post(new FinStaticPhase1_2DD2(), LogicalDuration.ofSeconds(1));
+>>>>>>> refs/remotes/origin/master
 	}
 	
 	/*Drone 1*/
@@ -53,9 +57,10 @@ public class EntityMouvementSequenceurKizilBerkouk2 extends EntityMouvementSeque
 				rectilinearMover = new RectilinearMover(d, mv.getPosition(d), ini.getPositionsCles().get("PointCible1"), ini.getMaxLinearSpeed());
 				mv= rectilinearMover;
 				Logger.Information(Owner(), "Process FinStaticPhase1", "Phase mouvement linéaire enclenché");
-				Post(new FinLinearPhase2_2DD1(),mv.getDurationToReach());
+				Post(new FinLinearPhase2_2DD1() ,mv.getDurationToReach());
 			}
 		}
+
 
 			public class FinLinearPhase2_2DD1 extends SimEvent {
 
@@ -95,7 +100,7 @@ public class EntityMouvementSequenceurKizilBerkouk2 extends EntityMouvementSeque
 					rectilinearMover = new RectilinearMover(d, mv.getPosition(d), ini.getPositionsCles().get("PointCible4"), ini.getMaxLinearSpeed());
 					mv= rectilinearMover;
 					Logger.Information(Owner(), "Process FinStaticPhase1", "Phase mouvement linéaire enclenché");
-					Post(new FinLinearPhase2_2DD1(),mv.getDurationToReach());
+					Post(new FinLinearPhase2_2DD2(),mv.getDurationToReach());
 				}
 			}
 			public class FinLinearPhase2_2DD2 extends SimEvent {

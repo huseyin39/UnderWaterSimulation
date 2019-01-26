@@ -24,6 +24,7 @@ import kizil_berkouk.BE.SimEntity.MouvementSequenceur.EntityMouvementSequenceurK
 import kizil_berkouk.BE.SimEntity.MouvementSequenceur.EntityMouvementSequenceurKizilBerkouk3;
 import kizil_berkouk.BE.SimEntity.MouvementSequenceur.EntityMouvementSequenceurKizilBerkouk4;
 import kizil_berkouk.BE.SimEntity.MouvementSequenceur.EntityMouvementSequenceurKizilBerkouk5;
+
 import kizil_berkouk.BE.SimEntity.MouvementSequenceur.StaticMover;
 import enstabretagne.simulation.components.implementation.SimEntity;
 import enstabretagne.simulation.core.implementation.SimEvent;
@@ -31,6 +32,7 @@ import enstabretagne.simulation.core.implementation.SimEvent;
 
 @ToRecord(name="Drone")
 public class EntityDrone extends SimEntity implements IMovable,EntityDrone3DRepresentationInterface{
+
 	private EntityMouvementSequenceur rmv;
 	private EntityDroneInit DroneInit;
 	private EntityDroneFeature DroneFeature;

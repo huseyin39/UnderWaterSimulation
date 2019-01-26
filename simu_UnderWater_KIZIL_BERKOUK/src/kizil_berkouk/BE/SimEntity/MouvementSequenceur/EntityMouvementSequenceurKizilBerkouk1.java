@@ -15,7 +15,7 @@ import kizil_berkouk.BE.ScenarioInstanceBE1;
 
 @ToRecord(name="MouvementSequenceur")
 public class EntityMouvementSequenceurKizilBerkouk1 extends EntityMouvementSequenceur implements IMover{
-	private static int NbDrone = ScenarioInstanceBE1.nbDrone;
+
 
 	
 	public EntityMouvementSequenceurKizilBerkouk1(String name, SimFeatures features) {
@@ -46,6 +46,19 @@ public class EntityMouvementSequenceurKizilBerkouk1 extends EntityMouvementSeque
 	//DESCRIPTION COMPORTEMENT SCENARIO 1 DRONE	
 	//Ligne droite drone 1 
 	public class FinStaticPhase1 extends SimEvent {
+
+		@Override
+		public void Process() {
+			Logger.Information(Owner(), "Process FinStaticPhase1", "Fin de la première phase statique");
+			LogicalDateTime d = getCurrentLogicalDate();
+			rectilinearMover = new RectilinearMover(d, mv.getPosition(d), ini.getPositionsCles().get("PointCible1b"), ini.getMaxLinearSpeed());
+			mv= rectilinearMover;
+			Logger.Information(Owner(), "Process FinStaticPhase1", "Phase mouvement linéaire enclenché");
+			Post(new FinMisePosition1(),mv.getDurationToReach());
+		}
+	}
+	
+	public class FinMisePosition1 extends SimEvent {
 
 		@Override
 		public void Process() {

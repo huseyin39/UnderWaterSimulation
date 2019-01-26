@@ -25,7 +25,6 @@ import kizil_berkouk.BE.SimEntity.Ocean.EntityOceanFeature;
 import kizil_berkouk.BE.SimEntity.Ocean.EntityOceanInit;
 
 public class ScenarioInstanceBE1 implements IScenarioInstance {
-	public static int nbDrone = 2;
 
 	@Override
 	public IScenario getScenarioInstance() {
@@ -33,7 +32,8 @@ public class ScenarioInstanceBE1 implements IScenarioInstance {
 		
 		// Trajectory D1 -- 1D
 		HashMap<String,Point3D> positionsCles = new HashMap<String, Point3D>();
-		positionsCles.put("start", new Point3D(-600,-600,0));
+		positionsCles.put("start", new Point3D(0,0,0));
+		positionsCles.put("PointCible1b", new Point3D(-600, -600, 0));
 		positionsCles.put("PointCible1", new Point3D(-600,600,0));
 		positionsCles.put("PointCible2", new Point3D(200,600,0));
 		positionsCles.put("PointCible3", new Point3D(200,-600,0));
@@ -47,8 +47,9 @@ public class ScenarioInstanceBE1 implements IScenarioInstance {
 		EntityMouvementSequenceurFeature msfDrone;
 
 		// Drone 1
-		mstDrone= new MovableState(new Point3D(-600,-600,0),new Point3D(Math.sqrt(2)*4, Math.sqrt(2)*4,0), Point3D.ZERO, Point3D.ZERO, Point3D.ZERO, Point3D.ZERO);
-		msiDrone= new EntityMouvementSequenceurInit("MSI1Drone", mstDrone, 200, 0, 0, 0, positionsCles);
+		mstDrone= new MovableState(new Point3D(0,0,0),new Point3D(Math.sqrt(2)*4, Math.sqrt(2)*4,0), Point3D.ZERO, Point3D.ZERO, Point3D.ZERO, Point3D.ZERO);
+		msiDrone= new EntityMouvementSequenceurInit("MSI", mstDrone, 200, 0, 0, 0, positionsCles);
+
 		msfDrone = new EntityMouvementSequenceurFeature("MSF");
 		kizil_berkouksf.getDrones().put(new EntityDroneFeature("Drone1", 10, 5, Color.BLACK, msfDrone, kizil_berkouksf), new EntityDroneInit("Drone1", msiDrone));
 	
