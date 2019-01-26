@@ -39,8 +39,8 @@ public class EntityMouvementSequenceurKizilBerkouk2 extends EntityMouvementSeque
 	protected void AfterActivate(IEntity sender, boolean starting) {
 		Logger.Detail(this, "AfterActivate", "Activation de MouvementSequenceur");
 		//attente
-		Post(new FinStaticPhase1_2DD1(), getDurationToReach());
-		Post(new FinStaticPhase1_2DD2(), getDurationToReach());
+		Post(new FinStaticPhase1_2DD1(), LogicalDuration.ofSeconds(1));
+		Post(new FinStaticPhase1_2DD2(), LogicalDuration.ofSeconds(1));
 	}
 	
 	/*Drone 1*/
