@@ -5,6 +5,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.xmlbeans.impl.xb.xsdschema.Public;
+
 import enstabretagne.base.logger.Logger;
 import enstabretagne.base.logger.ToRecord;
 import enstabretagne.base.time.LogicalDateTime;
@@ -14,11 +16,13 @@ import enstabretagne.simulation.components.IEntity;
 import enstabretagne.simulation.components.data.SimFeatures;
 import enstabretagne.simulation.components.data.SimInitParameters;
 import enstabretagne.simulation.components.implementation.SimEntity;
+import enstabretagne.simulation.core.implementation.SimEvent;
 import kizil_berkouk.BE.Scenarios.Scenario;
 import kizil_berkouk.BE.SimEntity.Artefact.ArtefactFeatures;
 import kizil_berkouk.BE.SimEntity.Artefact.ArtefactInit;
 import kizil_berkouk.BE.SimEntity.Bateau.Representation3D.IBateauRepresentation3D;
 import kizil_berkouk.BE.SimEntity.Drone.EntityDrone;
+import kizil_berkouk.BE.SimEntity.Drone.EntityDrone.startScan;
 import kizil_berkouk.BE.SimEntity.MouvementSequenceur.EntityMouvementSequenceur;
 import javafx.geometry.Point3D;
 import javafx.scene.paint.Color;
@@ -138,35 +142,39 @@ public class Bateau extends SimEntity implements IMovable, IBateauRepresentation
 	@Override
     public void artefactFoundEvent(EntityDrone entityDrone, ArtefactFeatures artefactFeatures, ArtefactInit artefactInit) {
         Logger.Detail(this, "artefactFoundEvent", "Le drone %s a fini d\'envoyer les données d'enregistrement de l'artefact %s.", entityDrone.getName(), artefactFeatures.getId());
-        ScheduledThreadPoolExecutor scheduledPool = (ScheduledThreadPoolExecutor) Executors.newScheduledThreadPool(1);
-        Runnable runnabledelayedTask = new Runnable()
-		{
-			@Override
-			public void run()
-			{
-				analyzeArtefact(artefactInit, artefactFeatures);
-			}
-		};
-		Logger.Detail(this, "artefactFoundEvent", "Scanning de l\'artefact  %s par l\'equipage", artefactFeatures.getId());
-		scheduledPool.schedule(runnabledelayedTask, 5, TimeUnit.SECONDS);
-	}
-	
-	private void analyzeArtefact(ArtefactInit artefactInit, ArtefactFeatures artefactFeatures) {
-		Point3D positionArtefact3d = artefactInit.getMvtSeqInit().getEtatInitial().getPosition(); //position artefact
+        Logger.Detail(this, "artefactFoundEvent", "Scanning de l\'artefact  %s par l\'equipage", artefactFeatures.getId());
 		
-		if (artefactInit.getType() == 0) {
-			LogicalDuration d = getCurrentLogicalDate().soustract(new LogicalDateTime("20/01/2018 06:00"));
-			Logger.Detail(this, "analyzeArtefact", " ------ CIBLE TROUVEEEEE ------ Position : %s ---- Temps écoulé depuis le début : %s", positionArtefact3d.toString(), d.toString());
-			interruptMission();
-			//FX3DMonitor2.finishIt();
-			
-		}else {
-			String message = "Artefact trouvé " + artefactFeatures.getId() + " position " + positionArtefact3d.toString();
-			Logger.Detail(this, "analyzeArtefact", message);
-		}
+		int delay = (int)Math.round(RandomGenerator().nextUniform(20, 40));
+		Post(new analyzeArtefact(artefactInit, artefactFeatures), getCurrentLogicalDate().add(LogicalDuration.ofMinutes(delay)));
 	}
 	
-	private void interruptMission() {
+	public class analyzeArtefact extends SimEvent {
+		private ArtefactInit artefactInit;
+		private ArtefactFeatures artefactFeatures;
+		
+		public analyzeArtefact(ArtefactInit artefactInit, ArtefactFeatures artefactFeatures) {
+			this.artefactFeatures = artefactFeatures;
+			this.artefactInit = artefactInit;
+		}
+		
+		@Override
+		public void Process() {
+			Point3D positionArtefact3d = artefactInit.getMvtSeqInit().getEtatInitial().getPosition(); //position artefact
+			if (artefactInit.getType() == 0) {
+				LogicalDuration d = getCurrentLogicalDate().soustract(new LogicalDateTime("20/01/2018 06:00"));
+				Logger.Detail(this, "analyzeArtefact", " ------ CIBLE TROUVEEEEE ------ Position : %s ---- Temps écoulé depuis le début : %s", positionArtefact3d.toString(), d.toString());
+				interruptMission();
+				//FX3DMonitor2.finishIt();
+				
+			}else {
+				String message = "Artefact trouvé " + artefactFeatures.getId() + " position " + positionArtefact3d.toString();
+				Logger.Detail(this, "analyzeArtefact", message);
+			}
+		}
+		
+	}
+	
+	private void interruptMission() { // send message to drones
 		interruptEngineByDate();
 		for(EntityDrone entityDrone: entityDrones)
 			entityDrone.stopMission();

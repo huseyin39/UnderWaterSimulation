@@ -35,11 +35,15 @@ public class EntityMouvementSequenceurKizilBerkouk3 extends EntityMouvementSeque
 	@Override
 	protected void AfterActivate(IEntity sender, boolean starting) {
 		Logger.Detail(this, "AfterActivate", "Activation de MouvementSequenceur");
-		//attente
 		
-		Post(new FinStaticPhase3(), LogicalDuration.ofSeconds(1));
-		Post(new FinStaticPhase2(), LogicalDuration.ofMinutes(10));
-		Post(new FinStaticPhase1(),LogicalDuration.ofMinutes(20));
+		if (ini.getPositionsCles().get("PointCible4") != null)
+			Post(new FinStaticPhase3(), LogicalDuration.ofSeconds(1));
+		
+		else if (ini.getPositionsCles().get("PointCible2b") != null) 
+			Post(new FinStaticPhase2(), LogicalDuration.ofMinutes(10));
+		
+		else
+			Post(new FinStaticPhase1(),LogicalDuration.ofMinutes(20));
 		
 	}
 	
@@ -234,7 +238,6 @@ public class EntityMouvementSequenceurKizilBerkouk3 extends EntityMouvementSeque
 			staticMover =new StaticMover(mv.getPosition(d), mv.getVitesse(d));			
 			Logger.Information(Owner(), "Process Arret", "Mode arrêt : %s", mv.getPosition(d));
 			mv = staticMover;
-			System.out.println(getCurrentLogicalDate() + "  --  " + ini.getPositionsCles());
 		}
 		
 	}

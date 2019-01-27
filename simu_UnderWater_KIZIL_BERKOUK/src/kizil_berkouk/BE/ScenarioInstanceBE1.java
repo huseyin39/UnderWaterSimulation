@@ -27,12 +27,12 @@ public class ScenarioInstanceBE1 implements IScenarioInstance {
 		// Trajectory D1 -- 1D
 		HashMap<String,Point3D> positionsCles = new HashMap<String, Point3D>();
 		positionsCles.put("start", new Point3D(0,0,0));
-		positionsCles.put("PointCible1b", new Point3D(-600, -600, 0));
-		positionsCles.put("PointCible1", new Point3D(-600,600,0));
-		positionsCles.put("PointCible2", new Point3D(200,600,0));
-		positionsCles.put("PointCible3", new Point3D(200,-600,0));
-		positionsCles.put("PointCible4", new Point3D(1000,-600,0));
-		positionsCles.put("PointCible5", new Point3D(1000,600,0));
+		positionsCles.put("PointCible1b", new Point3D(-6000, -6000, 0));
+		positionsCles.put("PointCible1", new Point3D(-6000,6000,0));
+		positionsCles.put("PointCible2", new Point3D(2000,6000,0));
+		positionsCles.put("PointCible3", new Point3D(2000,-6000,0));
+		positionsCles.put("PointCible4", new Point3D(10000,-6000,0));
+		positionsCles.put("PointCible5", new Point3D(10000,6000,0));
 			
 
 		// Creation drone
@@ -42,7 +42,7 @@ public class ScenarioInstanceBE1 implements IScenarioInstance {
 
 		// Drone 1
 		mstDrone= new MovableState(new Point3D(0,0,0),new Point3D(Math.sqrt(2)*4, Math.sqrt(2)*4,0), Point3D.ZERO, Point3D.ZERO, Point3D.ZERO, Point3D.ZERO);
-		msiDrone= new EntityMouvementSequenceurInit("MSI1Drone", mstDrone, 200, 0, 0, 0, positionsCles);
+		msiDrone= new EntityMouvementSequenceurInit("MSI1Drone", mstDrone, 4, 0, 1, 3, positionsCles);
 
 		msfDrone = new EntityMouvementSequenceurFeature("MSF");
 		kizil_berkouksf.getDrones().put(new EntityDroneFeature("Drone1", 10, 5, Color.BLACK, msfDrone, kizil_berkouksf), new EntityDroneInit("Drone1", msiDrone));
@@ -53,7 +53,7 @@ public class ScenarioInstanceBE1 implements IScenarioInstance {
 		
 		
 		LogicalDateTime start = new LogicalDateTime("20/01/2018 06:00");
-		LogicalDateTime end = start.add(LogicalDuration.ofMinutes(2)); //time here to modifiy?
+		LogicalDateTime end = start.add(LogicalDuration.ofHours(5)); //time here to modifiy?
 		Scenario bms = new Scenario(new ScenarioId("Scenario"), kizil_berkouksf, start, end);
 		
 		return bms;

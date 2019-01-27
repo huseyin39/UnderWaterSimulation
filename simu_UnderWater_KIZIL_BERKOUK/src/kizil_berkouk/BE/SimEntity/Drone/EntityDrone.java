@@ -1,7 +1,10 @@
 package kizil_berkouk.BE.SimEntity.Drone;
 
+import java.security.acl.Owner;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -9,6 +12,7 @@ import java.util.concurrent.TimeUnit;
 import enstabretagne.base.logger.Logger;
 import enstabretagne.base.logger.ToRecord;
 import enstabretagne.base.time.LogicalDateTime;
+import enstabretagne.base.time.LogicalDuration;
 import enstabretagne.monitor.interfaces.IMovable;
 import enstabretagne.simulation.components.IEntity;
 import enstabretagne.simulation.components.data.SimFeatures;
@@ -24,8 +28,10 @@ import kizil_berkouk.BE.SimEntity.MouvementSequenceur.EntityMouvementSequenceurK
 import kizil_berkouk.BE.SimEntity.MouvementSequenceur.EntityMouvementSequenceurKizilBerkouk3;
 import kizil_berkouk.BE.SimEntity.MouvementSequenceur.EntityMouvementSequenceurKizilBerkouk4;
 import kizil_berkouk.BE.SimEntity.MouvementSequenceur.EntityMouvementSequenceurKizilBerkouk5;
-
+import kizil_berkouk.BE.SimEntity.MouvementSequenceur.RectilinearMover;
+import kizil_berkouk.BE.SimEntity.MouvementSequenceur.EntityMouvementSequenceurKizilBerkouk2.FinLinearPhase2_2DD1;
 import enstabretagne.simulation.components.implementation.SimEntity;
+import enstabretagne.simulation.core.implementation.SimEvent;
 
 
 @ToRecord(name="Drone")
@@ -73,10 +79,9 @@ public class EntityDrone extends SimEntity implements IMovable,EntityDrone3DRepr
 		default:
 			break;
 		}
-		
 		rmv.initialize(DroneInit.getMvtSeqInitial());
-	
 	}
+	
 
 	@Override
 	protected void BeforeActivating(IEntity sender, boolean starting) {
@@ -87,7 +92,7 @@ public class EntityDrone extends SimEntity implements IMovable,EntityDrone3DRepr
 	protected void AfterActivate(IEntity sender, boolean starting) {
 		Logger.Detail(this, "AfterActivate", "Activation du drone");
 		rmv.activate();
-		startScan();
+		Post(new startScan(this), getCurrentLogicalDate().add(LogicalDuration.ofSeconds(1)));
 	}
 	
 
@@ -130,6 +135,7 @@ public class EntityDrone extends SimEntity implements IMovable,EntityDrone3DRepr
 
 	@Override
 	protected void BeforeDeactivating(IEntity sender, boolean starting) {
+		scheduledPool.shutdownNow();
 		rmv.deactivate();
 	}
 
@@ -157,14 +163,27 @@ public class EntityDrone extends SimEntity implements IMovable,EntityDrone3DRepr
 	}
 
 
-
 	public void setDroneListener(droneListener listener) {
         this.mListener = listener;
     }
 	
-	private void sendMessageToBoat(ArtefactFeatures artefactFeatures, ArtefactInit artefactInit) { //add here the timer to send messages to boat
-		if (mListener != null) 
-            mListener.artefactFoundEvent(this, artefactFeatures, artefactInit);
+	private class sendMessageToBoat extends SimEvent { //add here the timer to send
+		private ArtefactFeatures artefactFeatures;
+		private ArtefactInit artefactInit;
+		private EntityDrone entityDrone;
+		
+		public sendMessageToBoat(ArtefactFeatures artefactFeatures, ArtefactInit artefactInit, EntityDrone entityDrone) {
+			this.artefactFeatures = artefactFeatures;
+			this.artefactInit = artefactInit;
+			this.entityDrone = entityDrone;
+		}
+		
+		@Override
+		public void Process() {
+			if (mListener != null) 
+	            mListener.artefactFoundEvent(entityDrone, artefactFeatures, artefactInit);
+		}
+		
 	}
 	
 	/**
@@ -180,22 +199,20 @@ public class EntityDrone extends SimEntity implements IMovable,EntityDrone3DRepr
 	/**
 	 * Function which handles the scan procedures given the frequency.
 	 */
-	public void startScan() {
-		scheduledPool = (ScheduledThreadPoolExecutor) Executors.newScheduledThreadPool(1);
-		Runnable runnabledelayedTask = new Runnable()
-		{
-			@Override
-			public void run()
-			{
-				LogicalDateTime d = getCurrentLogicalDate();
-				if (d.compareTo(new LogicalDateTime("20/01/2018 06:00")) > 0) {
-					System.out.println("Scanning " + getName());
-					scan();
-				}
-			}
-		};
+	public class startScan extends SimEvent{
+		public EntityDrone entityDrone;
 		
-		scheduledPool.scheduleWithFixedDelay(runnabledelayedTask, 0, 1, TimeUnit.SECONDS);
+		public startScan(EntityDrone entityDrone) {
+			this.entityDrone = entityDrone;
+		}
+		
+		@Override
+		public void Process() {
+			Logger.Detail(Owner(), "startScan", "%s scanned ", entityDrone.DroneInit.getName());
+				System.out.println("Scanning " + getName());
+				scan();
+				Post(new startScan(entityDrone), getCurrentLogicalDate().add(LogicalDuration.ofMinutes(1)));
+		}	
 	}
 	
 	
@@ -203,14 +220,17 @@ public class EntityDrone extends SimEntity implements IMovable,EntityDrone3DRepr
 		HashMap<ArtefactFeatures, ArtefactInit> artefacts = DroneFeature.getScenarioFeatures().getArtefacts();
 		
 		if (artefacts != null) { // pour éviter de Throw un nullPointerException
-			for (Map.Entry<ArtefactFeatures, ArtefactInit> entry : artefacts.entrySet()) {
+			Iterator<Entry<ArtefactFeatures, ArtefactInit>> iterator =  artefacts.entrySet().iterator();
+			while (iterator.hasNext()) {
+				Map.Entry<ArtefactFeatures,ArtefactInit> entry = (Entry<ArtefactFeatures, ArtefactInit>) iterator.next();
 				ArtefactFeatures artefactFeatures = entry.getKey();
 				ArtefactInit artefactInit =entry.getValue();
 				Point3D positionArtefact3d = artefactInit.getMvtSeqInit().getEtatInitial().getPosition(); //position artefact
 				
 				if (isDetectable(positionArtefact3d)) {
-					sendMessageToBoat(artefactFeatures, artefactInit);
-					artefacts.remove(artefactFeatures); // retrait de l'artefact de la liste des artefacts
+					randomTimeMessage(artefactFeatures, artefactInit);
+					iterator.remove(); // retrait de l'artefact de la liste des artefacts
+					break;
 					//postInterrupt(new interuptPhase(), getCurrentLogicalDate().add(LogicalDuration.ofSeconds(1)));
 				}
 			}
@@ -218,21 +238,28 @@ public class EntityDrone extends SimEntity implements IMovable,EntityDrone3DRepr
 	}
 	
 	
+	private void randomTimeMessage(ArtefactFeatures artefactFeatures, ArtefactInit artefactInit) {
+		int delay = (int)Math.round(RandomGenerator().nextUniform(3, 5));
+		Post(new sendMessageToBoat(artefactFeatures, artefactInit, this), getCurrentLogicalDate().add(LogicalDuration.ofMinutes(delay)));
+	}
+	
+	
 	/**
 	 * To stop the scans
 	 */
 	public void stopMission() {
-		scheduledPool.shutdownNow();
+		Logger.Detail(this, "stopMission", "%s stopped", DroneInit.getName());
+		
+		//scheduledPool.shutdownNow();
 	}
 	
 
 	
 	private boolean isDetectable(Point3D positionArtefact3d) {
 		double distance = getPosition().distance(positionArtefact3d);
-		if (distance < 500)
+		if (distance < 5000)
 			return true;
 		return false;
-		
 	}
 	
 	/*

@@ -34,9 +34,11 @@ public class EntityMouvementSequenceurKizilBerkouk2 extends EntityMouvementSeque
 	@Override
 	protected void AfterActivate(IEntity sender, boolean starting) {
 		Logger.Detail(this, "AfterActivate", "Activation de MouvementSequenceur");
-		//attente
-		Post(new FinStaticPhase1_2DD1(), LogicalDuration.ofSeconds(1));
-		Post(new FinStaticPhase1_2DD2(), LogicalDuration.ofMinutes(10));
+		
+		if (ini.getPositionsCles().get("PointCible1") != null)
+			Post(new FinStaticPhase1_2DD1(), LogicalDuration.ofSeconds(1));
+		else
+			Post(new FinStaticPhase1_2DD2(), LogicalDuration.ofSeconds(1));
 
 	}
 	

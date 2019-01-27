@@ -16,8 +16,6 @@ public class EntityMouvementSequenceurKizilBerkouk5 extends EntityMouvementSeque
 	public EntityMouvementSequenceurKizilBerkouk5(String name, SimFeatures features) {
 		super(name, features);
 		
-		
-		
 	}
 
 	@Override
@@ -34,12 +32,16 @@ public class EntityMouvementSequenceurKizilBerkouk5 extends EntityMouvementSeque
 	@Override
 	protected void AfterActivate(IEntity sender, boolean starting) {
 		Logger.Detail(this, "AfterActivate", "Activation de MouvementSequenceur");
-		//attente
-		Post(new FinStaticPhase2(), LogicalDuration.ofSeconds(1));
-		Post(new FinCircularPhase3(), LogicalDuration.ofMinutes(10));
-		Post(new FinStaticPhase4(), LogicalDuration.ofMinutes(20));
-		Post(new FinStaticPhase5(), LogicalDuration.ofMinutes(30));
-		Post(new FinStaticPhase1(), LogicalDuration.ofMinutes(40));
+		if (ini.getPositionsCles().get("PointCible2b") != null)
+			Post(new FinStaticPhase2(), LogicalDuration.ofSeconds(1));
+		else if (ini.getPositionsCles().get("PointCible3") != null) 
+			Post(new FinCircularPhase3(), LogicalDuration.ofMinutes(10));
+		else if (ini.getPositionsCles().get("PointCible4b") != null) 
+			Post(new FinStaticPhase4(), LogicalDuration.ofMinutes(20));
+		else if (ini.getPositionsCles().get("PointCible5") != null) 
+			Post(new FinStaticPhase5(), LogicalDuration.ofMinutes(30));
+		else
+			Post(new FinStaticPhase1(), LogicalDuration.ofMinutes(40));
 	}
 	
 	public class FinStaticPhase1 extends SimEvent {
@@ -249,7 +251,6 @@ public class EntityMouvementSequenceurKizilBerkouk5 extends EntityMouvementSeque
 			staticMover =new StaticMover(mv.getPosition(d), mv.getVitesse(d));			
 			Logger.Information(Owner(), "Process Arret", "Mode arrêt : %s", mv.getPosition(d));
 			mv = staticMover;
-			System.out.println(getCurrentLogicalDate() + "  --  " + ini.getPositionsCles());
 		}
 		
 	}

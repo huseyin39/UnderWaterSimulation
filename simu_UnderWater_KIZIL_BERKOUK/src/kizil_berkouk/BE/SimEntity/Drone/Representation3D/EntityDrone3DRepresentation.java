@@ -31,7 +31,7 @@ public class EntityDrone3DRepresentation extends Representation3D {
 		Drone3D = (EntityDrone3DRepresentationInterface) obj;
 	    drone = new Group();
 	    double r1 = Drone3D.getRayon();
-		int h = 2;
+		double h = Drone3D.getLongueur();
 	    
 	    PhongMaterial material = new PhongMaterial(Drone3D.getColor());
 
