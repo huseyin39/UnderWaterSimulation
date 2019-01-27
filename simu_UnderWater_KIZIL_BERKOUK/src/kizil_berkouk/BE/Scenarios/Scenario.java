@@ -35,6 +35,10 @@ public class Scenario extends SimScenario{
 		
 	}
 	
+	public static ArrayList<EntityDrone> getListEntityDrones() {
+		return listEntityDrones;
+	}
+	
 	@Override
 	protected void initializeSimEntity(SimInitParameters init) {
 		super.initializeSimEntity(init);
@@ -52,16 +56,16 @@ public class Scenario extends SimScenario{
 			Logger.Detail(this, "afteractivate", "artefact à créer = %s , %s", e.getValue(),e.getKey());
 			Post(new ArtefactArrival(e.getValue(),e.getKey()));
 		}
-		for(Map.Entry<BateauFeatures, BateauInit> e : feature.getBateau().entrySet())
-		{
-			Logger.Detail(this, "afteractivate", "bateau à créer = %s , %s", e.getValue(),e.getKey());
-			Post(new BateauArrival(e.getValue(),e.getKey()));
-		}
 		for(Map.Entry<EntityDroneFeature, EntityDroneInit> e : feature.getDrones().entrySet())
 		{
 			Logger.Detail(this, "afteractivate", "drone à créer = %s , %s", e.getValue(),e.getKey());
 			Post(new DroneArrival(e.getValue(),e.getKey()));
 
+		}
+		for(Map.Entry<BateauFeatures, BateauInit> e : feature.getBateau().entrySet())
+		{
+			Logger.Detail(this, "afteractivate", "bateau à créer = %s , %s", e.getValue(),e.getKey());
+			Post(new BateauArrival(e.getValue(),e.getKey()));
 		}
 		for(Map.Entry<EntityOceanFeature, EntityOceanInit> e : feature.getOcean().entrySet())
 		{

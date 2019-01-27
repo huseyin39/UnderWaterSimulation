@@ -4,18 +4,10 @@ import enstabretagne.base.logger.Logger;
 import enstabretagne.base.logger.ToRecord;
 import enstabretagne.base.time.LogicalDateTime;
 import enstabretagne.base.time.LogicalDuration;
-import enstabretagne.monitor.implementation.XYZRotator2;
 import enstabretagne.simulation.components.IEntity;
 import enstabretagne.simulation.components.data.SimFeatures;
 import enstabretagne.simulation.components.data.SimInitParameters;
 import enstabretagne.simulation.core.implementation.SimEvent;
-import javafx.geometry.Point3D;
-import javafx.scene.transform.Rotate;
-import kizil_berkouk.BE.ScenarioInstanceBE1;
-import kizil_berkouk.BE.SimEntity.MouvementSequenceur.EntityMouvementSequenceurKizilBerkouk4.Arret;
-import kizil_berkouk.BE.SimEntity.MouvementSequenceur.EntityMouvementSequenceurKizilBerkouk4.FinLinearPhase1;
-import kizil_berkouk.BE.SimEntity.MouvementSequenceur.EntityMouvementSequenceurKizilBerkouk4.FinLinearPhase4;
-import kizil_berkouk.BE.SimEntity.MouvementSequenceur.EntityMouvementSequenceurKizilBerkouk4.FinStaticPhase1b;
 
 @ToRecord(name="MouvementSequenceur")
 public class EntityMouvementSequenceurKizilBerkouk3 extends EntityMouvementSequenceur implements IMover{

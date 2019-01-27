@@ -9,16 +9,18 @@ import enstabretagne.simulation.components.IEntity;
 import enstabretagne.simulation.components.data.SimFeatures;
 import enstabretagne.simulation.components.data.SimInitParameters;
 import enstabretagne.simulation.components.implementation.SimEntity;
+import kizil_berkouk.BE.Scenarios.Scenario;
+import kizil_berkouk.BE.SimEntity.Artefact.ArtefactFeatures;
 import kizil_berkouk.BE.SimEntity.Bateau.Representation3D.IBateauRepresentation3D;
 import kizil_berkouk.BE.SimEntity.Drone.EntityDrone;
 import kizil_berkouk.BE.SimEntity.MouvementSequenceur.EntityMouvementSequenceur;
 import javafx.geometry.Point3D;
 import javafx.scene.paint.Color;
 
-@ToRecord(name="Bouee")
+@ToRecord(name="Bateau")
 public class Bateau extends SimEntity implements IMovable, IBateauRepresentation3D, EntityDrone.droneListener{
 	
-	private List<EntityDrone> entityDrones; // to be initialized
+	private List<EntityDrone> entityDrones;
 	private EntityMouvementSequenceur rmv;
 
 	public Bateau(String name, SimFeatures features) {
@@ -36,6 +38,10 @@ public class Bateau extends SimEntity implements IMovable, IBateauRepresentation
 		
 		rmv = (EntityMouvementSequenceur) createChild(EntityMouvementSequenceur.class, "monSequenceur", ((BateauFeatures) getFeatures()).getSeqFeature());
 		rmv.initialize(bi.getMvtSeqInit());
+		entityDrones = Scenario.getListEntityDrones();
+		for (EntityDrone eDrone : entityDrones) {
+			eDrone.setDroneListener(this);
+		 }
 	}
 
 	@Override
@@ -124,10 +130,8 @@ public class Bateau extends SimEntity implements IMovable, IBateauRepresentation
 	}
 	
 	@Override
-    public void artefactFoundEvent(String myString) {
-        for (EntityDrone eDrone : entityDrones) {
-        	
-        }
+    public void artefactFoundEvent(EntityDrone entityDrone, ArtefactFeatures artefactFeatures) {
+        Logger.Detail(this, "artefactFoundEvent", "Le drone %s a fini d\'envoyer les données d'enregistrement de l'artefact %s.", entityDrone.getName(), artefactFeatures.getId());
     }
 
 }

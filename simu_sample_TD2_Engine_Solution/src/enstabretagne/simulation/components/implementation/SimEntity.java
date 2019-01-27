@@ -590,6 +590,9 @@ public abstract class SimEntity extends SimObject implements IEntity{
 			OnInitialized.forEach((initializationListener) -> initializationListener
 					.NotifyInitialization(this, init));
 	}
+	
+	
+	
 
 	// / <summary>
 	// / Activation of the object (pending events in past are fired)

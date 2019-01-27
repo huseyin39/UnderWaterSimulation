@@ -4,30 +4,13 @@ import enstabretagne.base.logger.Logger;
 import enstabretagne.base.logger.ToRecord;
 import enstabretagne.base.time.LogicalDateTime;
 import enstabretagne.base.time.LogicalDuration;
-import enstabretagne.monitor.implementation.XYZRotator2;
 import enstabretagne.simulation.components.IEntity;
 import enstabretagne.simulation.components.data.SimFeatures;
 import enstabretagne.simulation.components.data.SimInitParameters;
 import enstabretagne.simulation.core.implementation.SimEvent;
-import javafx.geometry.Point3D;
-import javafx.scene.transform.Rotate;
-import kizil_berkouk.BE.ScenarioInstanceBE1;
-import kizil_berkouk.BE.SimEntity.MouvementSequenceur.EntityMouvementSequenceurKizilBerkouk5.Arret;
-import kizil_berkouk.BE.SimEntity.MouvementSequenceur.EntityMouvementSequenceurKizilBerkouk5.FinCircularPhase3;
-import kizil_berkouk.BE.SimEntity.MouvementSequenceur.EntityMouvementSequenceurKizilBerkouk5.FinLinearPhase1;
-import kizil_berkouk.BE.SimEntity.MouvementSequenceur.EntityMouvementSequenceurKizilBerkouk5.FinLinearPhase4;
-import kizil_berkouk.BE.SimEntity.MouvementSequenceur.EntityMouvementSequenceurKizilBerkouk5.FinLinearPhase5;
-import kizil_berkouk.BE.SimEntity.MouvementSequenceur.EntityMouvementSequenceurKizilBerkouk5.FinStaticPhase1;
-import kizil_berkouk.BE.SimEntity.MouvementSequenceur.EntityMouvementSequenceurKizilBerkouk5.FinStaticPhase1b;
-import kizil_berkouk.BE.SimEntity.MouvementSequenceur.EntityMouvementSequenceurKizilBerkouk5.FinStaticPhase2;
-import kizil_berkouk.BE.SimEntity.MouvementSequenceur.EntityMouvementSequenceurKizilBerkouk5.FinStaticPhase4;
-import kizil_berkouk.BE.SimEntity.MouvementSequenceur.EntityMouvementSequenceurKizilBerkouk5.FinStaticPhase5;
 
 @ToRecord(name="MouvementSequenceur")
-public class EntityMouvementSequenceurKizilBerkouk4 extends EntityMouvementSequenceur implements IMover{
-	private String name;
-	
-
+public class EntityMouvementSequenceurKizilBerkouk4 extends EntityMouvementSequenceur implements IMover{	
 	
 	public EntityMouvementSequenceurKizilBerkouk4(String name, SimFeatures features) {
 		super(name, features);

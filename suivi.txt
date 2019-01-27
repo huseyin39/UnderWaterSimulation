@@ -4,6 +4,8 @@
 - Artefact -> crééer plusieurs packages ou créer juste différents types ?
 - ScenarioInstanceBE : La positon du bateau est cractérisé par son centre géométrique. Il est au centre pour (0,0,h/2) ici la valeur de h vaut 2
 
+doing : Bateau le artefactFound et relier aux drones; faire l'histoire du germe
+
 H: 
  attention aux effets de bord
  startScan() :  timer pour le faire toutes les  minutes + disparition de l'écran: pas besoin, juste enlever du hashMap, pour ne pas le chercher à nouveau

@@ -156,18 +156,18 @@ public class EntityDrone extends SimEntity implements IMovable,EntityDrone3DRepr
 		return DroneFeature.getTaille();
 	}
 	
-	public void setMyClassListener(droneListener listener) {
+	public void setDroneListener(droneListener listener) {
         this.mListener = listener;
     }
 	
-	private void sendMessageToBoat() {
+	private void sendMessageToBoat(ArtefactFeatures artefactFeatures) {
 		if (mListener != null) 
-            mListener.artefactFoundEvent("hello");
+            mListener.artefactFoundEvent(this, artefactFeatures);
 	}
 	
 	
 	public interface droneListener {
-        public void artefactFoundEvent(String title);
+        public void artefactFoundEvent(EntityDrone entityDrone, ArtefactFeatures artefactFeatures);
     }
 	
 	
@@ -201,10 +201,12 @@ public class EntityDrone extends SimEntity implements IMovable,EntityDrone3DRepr
 				Point3D positionArtefact3d = artefactInit.getMvtSeqInit().getEtatInitial().getPosition(); //position artefact
 				
 				if (isDetectable(positionArtefact3d)) {
+					sendMessageToBoat(artefactFeatures);
 					//postInterrupt(new interuptPhase(), getCurrentLogicalDate().add(LogicalDuration.ofSeconds(1)));
 					if (artefactInit.getType() == 0) {
 						System.out.println("\n ------- Cible trouvé !! " + " Position :" + positionArtefact3d.toString());
 						interruptEngineByDate();
+						
 						//FX3DMonitor2.finishIt();
 						return true;
 						
@@ -233,7 +235,7 @@ public class EntityDrone extends SimEntity implements IMovable,EntityDrone3DRepr
 	
 	private boolean isDetectable(Point3D positionArtefact3d) {
 		double distance = getPosition().distance(positionArtefact3d);
-		if (distance < 5000)
+		if (distance < 500)
 			return true;
 		return false;
 		

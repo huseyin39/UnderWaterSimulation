@@ -1,6 +1,9 @@
 package kizil_berkouk.BE.SimEntity.Bateau;
 
+import java.util.List;
+
 import enstabretagne.simulation.components.data.SimFeatures;
+import kizil_berkouk.BE.SimEntity.Drone.EntityDrone;
 import kizil_berkouk.BE.SimEntity.MouvementSequenceur.EntityMouvementSequenceurFeature;
 
 public class BateauFeatures extends SimFeatures {
