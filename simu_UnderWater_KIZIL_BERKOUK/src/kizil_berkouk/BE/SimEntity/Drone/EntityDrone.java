@@ -25,9 +25,7 @@ import kizil_berkouk.BE.SimEntity.MouvementSequenceur.EntityMouvementSequenceurK
 import kizil_berkouk.BE.SimEntity.MouvementSequenceur.EntityMouvementSequenceurKizilBerkouk4;
 import kizil_berkouk.BE.SimEntity.MouvementSequenceur.EntityMouvementSequenceurKizilBerkouk5;
 
-import kizil_berkouk.BE.SimEntity.MouvementSequenceur.StaticMover;
 import enstabretagne.simulation.components.implementation.SimEntity;
-import enstabretagne.simulation.core.implementation.SimEvent;
 
 
 @ToRecord(name="Drone")
@@ -37,7 +35,9 @@ public class EntityDrone extends SimEntity implements IMovable,EntityDrone3DRepr
 	private EntityDroneInit DroneInit;
 	private EntityDroneFeature DroneFeature;
 	private droneListener mListener = null;
-	
+	private ScheduledThreadPoolExecutor scheduledPool;
+
+
 	public EntityDrone(String name, SimFeatures features) {
 		super(name, features);
 		DroneFeature = (EntityDroneFeature) features;
@@ -155,24 +155,33 @@ public class EntityDrone extends SimEntity implements IMovable,EntityDrone3DRepr
 	public double getLongueur() {
 		return DroneFeature.getTaille();
 	}
-	
+
+
+
 	public void setDroneListener(droneListener listener) {
         this.mListener = listener;
     }
 	
-	private void sendMessageToBoat(ArtefactFeatures artefactFeatures) {
+	private void sendMessageToBoat(ArtefactFeatures artefactFeatures, ArtefactInit artefactInit) { //add here the timer to send messages to boat
 		if (mListener != null) 
-            mListener.artefactFoundEvent(this, artefactFeatures);
+            mListener.artefactFoundEvent(this, artefactFeatures, artefactInit);
 	}
 	
-	
+	/**
+	 * To allow to the Boat to send messages to drone
+	 * @author HuseyinK
+	 *
+	 */
 	public interface droneListener {
-        public void artefactFoundEvent(EntityDrone entityDrone, ArtefactFeatures artefactFeatures);
+        public void artefactFoundEvent(EntityDrone entityDrone, ArtefactFeatures artefactFeatures, ArtefactInit artefactInit);
     }
 	
 	
+	/**
+	 * Function which handles the scan procedures given the frequency.
+	 */
 	public void startScan() {
-		ScheduledThreadPoolExecutor scheduledPool = (ScheduledThreadPoolExecutor) Executors.newScheduledThreadPool(1);
+		scheduledPool = (ScheduledThreadPoolExecutor) Executors.newScheduledThreadPool(1);
 		Runnable runnabledelayedTask = new Runnable()
 		{
 			@Override
@@ -181,9 +190,7 @@ public class EntityDrone extends SimEntity implements IMovable,EntityDrone3DRepr
 				LogicalDateTime d = getCurrentLogicalDate();
 				if (d.compareTo(new LogicalDateTime("20/01/2018 06:00")) > 0) {
 					System.out.println("Scanning " + getName());
-					if (scan())
-						scheduledPool.shutdownNow();
-					
+					scan();
 				}
 			}
 		};
@@ -191,7 +198,8 @@ public class EntityDrone extends SimEntity implements IMovable,EntityDrone3DRepr
 		scheduledPool.scheduleWithFixedDelay(runnabledelayedTask, 0, 1, TimeUnit.SECONDS);
 	}
 	
-	public boolean scan() {
+	
+	public void scan() {
 		HashMap<ArtefactFeatures, ArtefactInit> artefacts = DroneFeature.getScenarioFeatures().getArtefacts();
 		
 		if (artefacts != null) { // pour éviter de Throw un nullPointerException
@@ -201,37 +209,23 @@ public class EntityDrone extends SimEntity implements IMovable,EntityDrone3DRepr
 				Point3D positionArtefact3d = artefactInit.getMvtSeqInit().getEtatInitial().getPosition(); //position artefact
 				
 				if (isDetectable(positionArtefact3d)) {
-					sendMessageToBoat(artefactFeatures);
+					sendMessageToBoat(artefactFeatures, artefactInit);
+					artefacts.remove(artefactFeatures); // retrait de l'artefact de la liste des artefacts
 					//postInterrupt(new interuptPhase(), getCurrentLogicalDate().add(LogicalDuration.ofSeconds(1)));
-					if (artefactInit.getType() == 0) {
-						System.out.println("\n ------- Cible trouvé !! " + " Position :" + positionArtefact3d.toString());
-						interruptEngineByDate();
-						
-						//FX3DMonitor2.finishIt();
-						return true;
-						
-					}else {
-						artefacts.remove(artefactFeatures); //On retire l'objet trouvé
-						System.out.println("Artefact trouvé " + artefactFeatures.getId() + " position " + positionArtefact3d.toString());
-						return false;
-					}
 				}
 			}
 		}
-		return true;
 	}
 	
 	
+	/**
+	 * To stop the scans
+	 */
+	public void stopMission() {
+		scheduledPool.shutdownNow();
+	}
 	
-	
-	public class interuptPhase extends SimEvent {
 
-		@Override
-		public void Process() {
-			StaticMover staticMover = new StaticMover(getPosition(), getPosition());
-			Logger.Information(Owner(), "Process FinStaticPhase1", "Phase mouvement linéaire enclenché");
-		}
-	}
 	
 	private boolean isDetectable(Point3D positionArtefact3d) {
 		double distance = getPosition().distance(positionArtefact3d);
@@ -240,5 +234,14 @@ public class EntityDrone extends SimEntity implements IMovable,EntityDrone3DRepr
 		return false;
 		
 	}
+	
+	/*
+	public class interuptPhase extends SimEvent {
+		@Override
+		public void Process() {
+			StaticMover staticMover = new StaticMover(getPosition(), getPosition());
+			Logger.Information(Owner(), "Process FinStaticPhase1", "Phase mouvement linéaire enclenché");
+		}
+	}*/
 
 }
