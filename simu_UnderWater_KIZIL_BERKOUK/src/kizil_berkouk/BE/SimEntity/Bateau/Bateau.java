@@ -191,6 +191,7 @@ public class Bateau extends SimEntity implements IMovable, IBateauRepresentation
 	}
 	
 	private void interruptMission() { // send message to drones
+		UnPostAllEvents();
 		interruptEngineByDate();
 		for(EntityDrone entityDrone: entityDrones)
 			entityDrone.stopMission();

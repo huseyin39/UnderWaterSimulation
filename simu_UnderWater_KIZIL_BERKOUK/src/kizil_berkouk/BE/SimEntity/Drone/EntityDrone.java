@@ -239,7 +239,7 @@ public class EntityDrone extends SimEntity implements IMovable,EntityDrone3DRepr
 	
 	
 	private void randomTimeMessage(ArtefactFeatures artefactFeatures, ArtefactInit artefactInit) {
-		int delay = (int)Math.round(RandomGenerator().nextUniform(3, 5));
+		int delay = (int)Math.round(RandomGenerator().nextUniform(33, 35)); // correspond à 30 minutes pour faire la plongée, la remontée et l'envoie du message
 		Post(new sendMessageToBoat(artefactFeatures, artefactInit, this), getCurrentLogicalDate().add(LogicalDuration.ofMinutes(delay)));
 	}
 	
@@ -249,7 +249,7 @@ public class EntityDrone extends SimEntity implements IMovable,EntityDrone3DRepr
 	 */
 	public void stopMission() {
 		Logger.Detail(this, "stopMission", "%s stopped", DroneInit.getName());
-		
+		UnPostAllEvents();
 		//scheduledPool.shutdownNow();
 	}
 	
