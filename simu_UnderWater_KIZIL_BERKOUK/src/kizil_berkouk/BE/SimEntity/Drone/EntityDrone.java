@@ -41,7 +41,7 @@ public class EntityDrone extends SimEntity implements IMovable,EntityDrone3DRepr
 	private EntityDroneInit DroneInit;
 	private EntityDroneFeature DroneFeature;
 	private droneListener mListener = null;
-	private ScheduledThreadPoolExecutor scheduledPool;
+	//private ScheduledThreadPoolExecutor scheduledPool;
 
 
 	public EntityDrone(String name, SimFeatures features) {
@@ -135,7 +135,7 @@ public class EntityDrone extends SimEntity implements IMovable,EntityDrone3DRepr
 
 	@Override
 	protected void BeforeDeactivating(IEntity sender, boolean starting) {
-		scheduledPool.shutdownNow();
+		//scheduledPool.shutdownNow();
 		rmv.deactivate();
 	}
 

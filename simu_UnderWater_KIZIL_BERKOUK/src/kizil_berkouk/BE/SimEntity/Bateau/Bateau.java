@@ -1,6 +1,8 @@
 package kizil_berkouk.BE.SimEntity.Bateau;
 
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -29,6 +31,9 @@ import javafx.scene.paint.Color;
 
 @ToRecord(name="Bateau")
 public class Bateau extends SimEntity implements IMovable, IBateauRepresentation3D, EntityDrone.droneListener{
+	public int nombreArtefactAnalyze = 0;
+	Queue<LogicalDateTime> myQ = new LinkedList<LogicalDateTime>();
+	private LogicalDateTime lastLogicalDateTime;
 	
 	private List<EntityDrone> entityDrones;
 	private EntityMouvementSequenceur rmv;
@@ -145,7 +150,15 @@ public class Bateau extends SimEntity implements IMovable, IBateauRepresentation
         Logger.Detail(this, "artefactFoundEvent", "Scanning de l\'artefact  %s par l\'equipage", artefactFeatures.getId());
 		
 		int delay = (int)Math.round(RandomGenerator().nextUniform(20, 40));
-		Post(new analyzeArtefact(artefactInit, artefactFeatures), getCurrentLogicalDate().add(LogicalDuration.ofMinutes(delay)));
+		if (myQ.size() == 0) {
+			lastLogicalDateTime =  getCurrentLogicalDate().add(LogicalDuration.ofMinutes(delay));
+			Post(new analyzeArtefact(artefactInit, artefactFeatures), lastLogicalDateTime);
+		}
+		else {
+			lastLogicalDateTime = lastLogicalDateTime.add(LogicalDuration.ofMinutes(delay));
+			Post(new analyzeArtefact(artefactInit, artefactFeatures), lastLogicalDateTime);
+		}
+		myQ.add(lastLogicalDateTime);
 	}
 	
 	public class analyzeArtefact extends SimEvent {
@@ -159,7 +172,10 @@ public class Bateau extends SimEntity implements IMovable, IBateauRepresentation
 		
 		@Override
 		public void Process() {
+			myQ.poll();
 			Point3D positionArtefact3d = artefactInit.getMvtSeqInit().getEtatInitial().getPosition(); //position artefact
+			nombreArtefactAnalyze++;
+			System.out.println("Nombre artefacts scannés : " + nombreArtefactAnalyze);
 			if (artefactInit.getType() == 0) {
 				LogicalDuration d = getCurrentLogicalDate().soustract(new LogicalDateTime("20/01/2018 06:00"));
 				Logger.Detail(this, "analyzeArtefact", " ------ CIBLE TROUVEEEEE ------ Position : %s ---- Temps écoulé depuis le début : %s", positionArtefact3d.toString(), d.toString());
