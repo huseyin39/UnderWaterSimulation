@@ -3,12 +3,6 @@ package kizil_berkouk.BE.SimEntity.Bateau;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
-
-import org.apache.xmlbeans.impl.xb.xsdschema.Public;
-
 import enstabretagne.base.logger.Logger;
 import enstabretagne.base.logger.ToRecord;
 import enstabretagne.base.time.LogicalDateTime;
@@ -24,7 +18,6 @@ import kizil_berkouk.BE.SimEntity.Artefact.ArtefactFeatures;
 import kizil_berkouk.BE.SimEntity.Artefact.ArtefactInit;
 import kizil_berkouk.BE.SimEntity.Bateau.Representation3D.IBateauRepresentation3D;
 import kizil_berkouk.BE.SimEntity.Drone.EntityDrone;
-import kizil_berkouk.BE.SimEntity.Drone.EntityDrone.startScan;
 import kizil_berkouk.BE.SimEntity.MouvementSequenceur.EntityMouvementSequenceur;
 import javafx.geometry.Point3D;
 import javafx.scene.paint.Color;
@@ -152,11 +145,11 @@ public class Bateau extends SimEntity implements IMovable, IBateauRepresentation
 		int delay = (int)Math.round(RandomGenerator().nextUniform(20, 40));
 		if (myQ.size() == 0) {
 			lastLogicalDateTime =  getCurrentLogicalDate().add(LogicalDuration.ofMinutes(delay));
-			Post(new analyzeArtefact(artefactInit, artefactFeatures), lastLogicalDateTime);
+			Post(new analyzeArtefact(artefactInit, artefactFeatures, entityDrone), lastLogicalDateTime);
 		}
 		else {
 			lastLogicalDateTime = lastLogicalDateTime.add(LogicalDuration.ofMinutes(delay));
-			Post(new analyzeArtefact(artefactInit, artefactFeatures), lastLogicalDateTime);
+			Post(new analyzeArtefact(artefactInit, artefactFeatures, entityDrone), lastLogicalDateTime);
 		}
 		myQ.add(lastLogicalDateTime);
 	}
@@ -164,10 +157,12 @@ public class Bateau extends SimEntity implements IMovable, IBateauRepresentation
 	public class analyzeArtefact extends SimEvent {
 		private ArtefactInit artefactInit;
 		private ArtefactFeatures artefactFeatures;
+		private EntityDrone entityDrone;
 		
-		public analyzeArtefact(ArtefactInit artefactInit, ArtefactFeatures artefactFeatures) {
+		public analyzeArtefact(ArtefactInit artefactInit, ArtefactFeatures artefactFeatures, EntityDrone entityDrone) {
 			this.artefactFeatures = artefactFeatures;
 			this.artefactInit = artefactInit;
+			this.entityDrone = entityDrone;
 		}
 		
 		@Override
@@ -178,7 +173,7 @@ public class Bateau extends SimEntity implements IMovable, IBateauRepresentation
 			System.out.println("Nombre artefacts scannés : " + nombreArtefactAnalyze);
 			if (artefactInit.getType() == 0) {
 				LogicalDuration d = getCurrentLogicalDate().soustract(new LogicalDateTime("20/01/2018 06:00"));
-				Logger.Detail(this, "analyzeArtefact", " ------ CIBLE TROUVEEEEE ------ Position : %s ---- Temps écoulé depuis le début : %s", positionArtefact3d.toString(), d.toString());
+				Logger.Detail(this, "analyzeArtefact", "-- CIBLE TROUVEEEEE PAR  %s-- Position : %s -- Temps écoulé depuis le début : %s", entityDrone.getName(), positionArtefact3d.toString(), d.toString());
 				interruptMission();
 				//FX3DMonitor2.finishIt();
 				
