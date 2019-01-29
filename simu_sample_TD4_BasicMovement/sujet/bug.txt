@@ -1,2 +1,0 @@
-bug du log quand on fait stop dans l'IHM.
-mettre
