@@ -38,7 +38,7 @@ public class EntityMouvementSequenceurKizilBerkouk2 extends EntityMouvementSeque
 		if (ini.getPositionsCles().get("PointCible1") != null)
 			Post(new FinStaticPhase1_2DD1(), LogicalDuration.ofSeconds(1));
 		else
-			Post(new FinStaticPhase1_2DD2(), LogicalDuration.ofSeconds(1));
+			Post(new FinStaticPhase1_2DD2(), LogicalDuration.ofMinutes(10));
 
 	}
 	

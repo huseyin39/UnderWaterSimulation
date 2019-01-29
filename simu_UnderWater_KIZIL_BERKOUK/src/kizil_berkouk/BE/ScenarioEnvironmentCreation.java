@@ -45,7 +45,7 @@ public class ScenarioEnvironmentCreation {
 		MovableState mstArtefact;
 		EntityMouvementSequenceurInit msiArtefact;
 		int taille = (int) Math.round( mRandom.nextUniform(2, 5) );
-		mstArtefact = new MovableState(point3dArtefact(), Point3D.ZERO, Point3D.ZERO, Point3D.ZERO, Point3D.ZERO, Point3D.ZERO);
+		mstArtefact = new MovableState(point3dArtefactCible(), Point3D.ZERO, Point3D.ZERO, Point3D.ZERO, Point3D.ZERO, Point3D.ZERO);
 		msiArtefact= new EntityMouvementSequenceurInit("MSI", mstArtefact, 0, 0,0,0, positionsCles);
 		kizil_berkouksf.getArtefacts().put(new ArtefactFeatures("Cible",taille, taille, taille), new ArtefactInit("Cible",msiArtefact, 0));
 	
@@ -76,7 +76,7 @@ public class ScenarioEnvironmentCreation {
 						
 			mstArtefact = new MovableState(point3dArtefact(), Point3D.ZERO, Point3D.ZERO, Point3D.ZERO, Point3D.ZERO, Point3D.ZERO);
 			msiArtefact= new EntityMouvementSequenceurInit("MSI", mstArtefact, 0, 0,0,0, positionsCles);
-			kizil_berkouksf.getArtefacts().put(new ArtefactFeatures("ArtefactT1", 3.0), new ArtefactInit("Type1A"+i,msiArtefact, 1));
+			kizil_berkouksf.getArtefacts().put(new ArtefactFeatures("ArtefactT1"+i, 3.0), new ArtefactInit("Type1A"+i,msiArtefact, 1));
 		}
 		
 		
@@ -87,7 +87,7 @@ public class ScenarioEnvironmentCreation {
 			
 			mstArtefact = new MovableState(point3dArtefact(), Point3D.ZERO, Point3D.ZERO, Point3D.ZERO, Point3D.ZERO, Point3D.ZERO);
 			msiArtefact= new EntityMouvementSequenceurInit("MSI", mstArtefact, 0, 0,0,0, positionsCles);
-			kizil_berkouksf.getArtefacts().put(new ArtefactFeatures("ArtefactT2", 3.0, 5.0), new ArtefactInit("Type2A"+i,msiArtefact, 2));
+			kizil_berkouksf.getArtefacts().put(new ArtefactFeatures("ArtefactT2"+i, 3.0, 5.0), new ArtefactInit("Type2A"+i,msiArtefact, 2));
 		}
 		
 		for(i=1; i<=N3; i++) //Artefact de type 3
@@ -97,7 +97,7 @@ public class ScenarioEnvironmentCreation {
 						
 			mstArtefact = new MovableState(point3dArtefact(), Point3D.ZERO, Point3D.ZERO, Point3D.ZERO, Point3D.ZERO, Point3D.ZERO);
 			msiArtefact= new EntityMouvementSequenceurInit("MSI", mstArtefact, 0, 0,0,0, positionsCles);
-			kizil_berkouksf.getArtefacts().put(new ArtefactFeatures("ArtefactT3",5.0, 5.0, 3.0), new ArtefactInit("Type3A"+i,msiArtefact, 3));
+			kizil_berkouksf.getArtefacts().put(new ArtefactFeatures("ArtefactT3"+i,5.0, 5.0, 3.0), new ArtefactInit("Type3A"+i,msiArtefact, 3));
 		}
 	}
 	

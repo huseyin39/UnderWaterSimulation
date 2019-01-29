@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.ScheduledThreadPoolExecutor;
 
 import enstabretagne.base.logger.Logger;
 import enstabretagne.base.time.LogicalDateTime;
@@ -410,6 +409,7 @@ public class FX3DMonitor2 extends Application implements IMonitor {
 			@Override
 			public void handle(WindowEvent arg0) {
 				Logger.Detail(null, "simuLoop.onCloseRequest", "Fermeture de la boucle de simulation JFX");
+				Logger.Terminate();
 				if (goon) {
 					goon = false;
 					arg0.consume();
@@ -768,6 +768,10 @@ public class FX3DMonitor2 extends Application implements IMonitor {
 		List<IScenario> scens = new ArrayList<>();
 		try {
 			int nombreDrones = ScenariiSettings.settings.nombreDrones;
+			if (nombreDrones > 5 || nombreDrones < 1 ) {
+				System.out.println("nombreDrones renseignés incorrect");
+				nombreDrones = 2;
+			}
 			String s = ScenariiSettings.settings.scenarioInstanceClassNames.get(nombreDrones-1);
 			Class<?> c = Class.forName(s);
 			if (IScenarioInstance.class.isAssignableFrom(c)) {
@@ -801,8 +805,14 @@ public class FX3DMonitor2 extends Application implements IMonitor {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 		ExperiencePlan xp = new ExperiencePlan(ScenariiSettings.settings.nbRepliques,
 				ScenariiSettings.settings.germeInitial, ScenariiSettings.settings.nombreDrones, scens);
+		if (ScenariiSettings.settings.germeInitial == 0) { //Si le germe n'est pas défini
+			long germe = Math.round(Math.random()*1000);
+			xp = new ExperiencePlan(ScenariiSettings.settings.nbRepliques,
+					germe, ScenariiSettings.settings.nombreDrones, scens);
+		}
 		loadExperiencePlan(xp);
 	}
 

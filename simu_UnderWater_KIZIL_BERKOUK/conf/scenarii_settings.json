@@ -1,6 +1,6 @@
 {
     "germeInitial": 5,
-	"nombreDrones" : 3,
+	"nombreDrones" : 2,
     "nbRepliques":6,
     "scenarioInstanceClassNames": [
     	"kizil_berkouk.BE.ScenarioInstanceBE1",

@@ -138,9 +138,9 @@ public class Bateau extends SimEntity implements IMovable, IBateauRepresentation
 	}
 	
 	@Override
-    public void artefactFoundEvent(EntityDrone entityDrone, ArtefactFeatures artefactFeatures, ArtefactInit artefactInit) {
-        Logger.Detail(this, "artefactFoundEvent", "Le drone %s a fini d\'envoyer les données d'enregistrement de l'artefact %s.", entityDrone.getName(), artefactFeatures.getId());
-        Logger.Detail(this, "artefactFoundEvent", "Scanning de l\'artefact  %s par l\'equipage", artefactFeatures.getId());
+    public synchronized void artefactFoundEvent(EntityDrone entityDrone, ArtefactFeatures artefactFeatures, ArtefactInit artefactInit) { //mutex ici
+        Logger.Detail(this, "artefactFoundEvent", "Le drone %s a fini d\'envoyer les données d'enregistrement.", entityDrone.getName());
+        Logger.Detail(this, "artefactFoundEvent", "Scanning de l\'artefact  par l\'equipage");
 		
 		int delay = (int)Math.round(RandomGenerator().nextUniform(20, 40));
 		if (myQ.size() == 0) {
@@ -166,7 +166,7 @@ public class Bateau extends SimEntity implements IMovable, IBateauRepresentation
 		}
 		
 		@Override
-		public void Process() {
+		public synchronized void Process() {
 			myQ.poll();
 			Point3D positionArtefact3d = artefactInit.getMvtSeqInit().getEtatInitial().getPosition(); //position artefact
 			nombreArtefactAnalyze++;

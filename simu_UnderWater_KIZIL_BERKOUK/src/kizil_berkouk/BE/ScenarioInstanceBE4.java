@@ -22,25 +22,25 @@ public class ScenarioInstanceBE4 implements IScenarioInstance {
 	public IScenario getScenarioInstance() {
 		ScenarioFeatures kizil_berkouksf = new ScenarioFeatures("kizil_berkoukSF");
 		
-		// Trajectory D1 -- 4D
+		// Trajectory D4 -- 4D
 		HashMap<String,Point3D> positionsCles41 = new HashMap<String, Point3D>();
 		positionsCles41.put("start", new Point3D(0,0,0));
 		positionsCles41.put("PointCible1", new Point3D(-6000, 2000, 0));
 		positionsCles41.put("PointCible1b", new Point3D(-6000,-6000,0));
 		
-		// Trajectory D2 -- 4D
+		// Trajectory D1 -- 4D
 		HashMap<String,Point3D> positionsCles42 = new HashMap<String, Point3D>();
 		positionsCles42.put("start", new Point3D(0, 0, 0));
 		positionsCles42.put("PointCible2b", new Point3D(-6000, 6000, 0));
 		positionsCles42.put("PointCible2", new Point3D(2000, 6000, 0));
 		
-		// Trajectory D3 -- 4D
+		// Trajectory D2 -- 4D
 		HashMap<String,Point3D> positionsCles43 = new HashMap<String, Point3D>();
 		positionsCles43.put("start", new Point3D(0,0,0));
 		positionsCles43.put("PointCible4b", new Point3D(2000, -6000, 0));
 		positionsCles43.put("PointCible4", new Point3D(10000, -6000, 0));
 		
-		// Trajectory D4 -- 4D
+		// Trajectory D3 -- 4D
 		HashMap<String,Point3D> positionsCles44 = new HashMap<String, Point3D>();
 		positionsCles44.put("start", new Point3D(0, 0, 0));
 		positionsCles44.put("PointCible5", new Point3D(10000, -2000, 0));
@@ -52,29 +52,29 @@ public class ScenarioInstanceBE4 implements IScenarioInstance {
 		EntityMouvementSequenceurInit msiDrone;
 		EntityMouvementSequenceurFeature msfDrone;
 		
-		// Drone 1
+		// Drone 4
 		mstDrone= new MovableState(new Point3D(0,0,0),new Point3D(Math.sqrt(2)*4, Math.sqrt(2)*4,0), Point3D.ZERO, Point3D.ZERO, Point3D.ZERO, Point3D.ZERO);
 		msiDrone= new EntityMouvementSequenceurInit("MSI4Drones", mstDrone,  4, 0, 1, 3, positionsCles41);
 		msfDrone = new EntityMouvementSequenceurFeature("MSF");
-		kizil_berkouksf.getDrones().put(new EntityDroneFeature("Drone1", 10, 5, Color.BLACK, msfDrone, kizil_berkouksf), new EntityDroneInit("Drone1", msiDrone));
+		kizil_berkouksf.getDrones().put(new EntityDroneFeature("Drone4", 10, 5, Color.BLACK, msfDrone, kizil_berkouksf), new EntityDroneInit("Drone1", msiDrone));
 		
-		//Drone 2
+		//Drone 1
 		mstDrone= new MovableState(new Point3D(0,0,0),new Point3D(Math.sqrt(2)*4, Math.sqrt(2)*4,0), Point3D.ZERO, Point3D.ZERO, Point3D.ZERO, Point3D.ZERO);
 		msiDrone= new EntityMouvementSequenceurInit("MSI4Drones", mstDrone,  4, 0, 1, 3, positionsCles42);
 		msfDrone = new EntityMouvementSequenceurFeature("MSF");
-		kizil_berkouksf.getDrones().put(new EntityDroneFeature("Drone2", 10, 5, Color.GREEN, msfDrone, kizil_berkouksf), new EntityDroneInit("Drone2", msiDrone));
+		kizil_berkouksf.getDrones().put(new EntityDroneFeature("Drone1", 10, 5, Color.GREEN, msfDrone, kizil_berkouksf), new EntityDroneInit("Drone2", msiDrone));
 	
-		// Drone 3
+		// Drone 2
 		mstDrone= new MovableState(new Point3D(0,0,0),new Point3D(Math.sqrt(2)*4, Math.sqrt(2)*4,0), Point3D.ZERO, Point3D.ZERO, Point3D.ZERO, Point3D.ZERO);
 		msiDrone= new EntityMouvementSequenceurInit("MSI4Drones", mstDrone,  4, 0, 1, 3, positionsCles43);
 		msfDrone = new EntityMouvementSequenceurFeature("MSF");
 		kizil_berkouksf.getDrones().put(new EntityDroneFeature("Drone2", 10, 5, Color.BROWN, msfDrone, kizil_berkouksf), new EntityDroneInit("Drone3", msiDrone));
 		
-		//Drone 4
+		//Drone 3
 		mstDrone= new MovableState(new Point3D(0,0,0),new Point3D(Math.sqrt(2)*4, Math.sqrt(2)*4,0), Point3D.ZERO, Point3D.ZERO, Point3D.ZERO, Point3D.ZERO);
 		msiDrone= new EntityMouvementSequenceurInit("MSI4Drones", mstDrone,  4, 0, 1, 3, positionsCles44);
 		msfDrone = new EntityMouvementSequenceurFeature("MSF");
-		kizil_berkouksf.getDrones().put(new EntityDroneFeature("Drone2", 10, 5, Color.RED, msfDrone, kizil_berkouksf), new EntityDroneInit("Drone4", msiDrone));
+		kizil_berkouksf.getDrones().put(new EntityDroneFeature("Drone3", 10, 5, Color.RED, msfDrone, kizil_berkouksf), new EntityDroneInit("Drone4", msiDrone));
 		
 		
 		ScenarioEnvironmentCreation scenarioEnvironmentCreation = new ScenarioEnvironmentCreation(kizil_berkouksf);

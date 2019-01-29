@@ -149,7 +149,13 @@ public abstract class AbstractMonitor implements IMonitor {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		ExperiencePlan xp = new ExperiencePlan(ScenariiSettings.settings.nbRepliques, ScenariiSettings.settings.germeInitial, ScenariiSettings.settings.nombreDrones, scens);
+		ExperiencePlan xp = new ExperiencePlan(ScenariiSettings.settings.nbRepliques,
+				ScenariiSettings.settings.germeInitial, ScenariiSettings.settings.nombreDrones, scens);
+		if (ScenariiSettings.settings.germeInitial == 0) { //Si le germe n'est pas défini
+			long germe = Math.round(Math.random()*1000);
+			xp = new ExperiencePlan(ScenariiSettings.settings.nbRepliques,
+					germe, ScenariiSettings.settings.nombreDrones, scens);
+		}
 		loadExperiencePlan(xp);
 	}
 

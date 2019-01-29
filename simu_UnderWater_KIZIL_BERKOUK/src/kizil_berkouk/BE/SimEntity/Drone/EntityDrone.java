@@ -2,10 +2,13 @@ package kizil_berkouk.BE.SimEntity.Drone;
 
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.Map;
+import java.util.Queue;
 import java.util.Map.Entry;
 import enstabretagne.base.logger.Logger;
 import enstabretagne.base.logger.ToRecord;
+import enstabretagne.base.time.LogicalDateTime;
 import enstabretagne.base.time.LogicalDuration;
 import enstabretagne.monitor.interfaces.IMovable;
 import enstabretagne.simulation.components.IEntity;
@@ -28,7 +31,9 @@ import enstabretagne.simulation.core.implementation.SimEvent;
 
 @ToRecord(name="Drone")
 public class EntityDrone extends SimEntity implements IMovable,EntityDrone3DRepresentationInterface{
-
+	Queue<LogicalDateTime> myQ = new LinkedList<LogicalDateTime>();//To handle the queue of messsages to send to boat
+	private LogicalDateTime lastLogicalDateTime;
+	
 	private EntityMouvementSequenceur rmv;
 	private EntityDroneInit DroneInit;
 	private EntityDroneFeature DroneFeature;
@@ -232,7 +237,15 @@ public class EntityDrone extends SimEntity implements IMovable,EntityDrone3DRepr
 	
 	private void randomTimeMessage(ArtefactFeatures artefactFeatures, ArtefactInit artefactInit) {
 		int delay = (int)Math.round(RandomGenerator().nextUniform(33, 35)); // correspond à 30 minutes pour faire la plongée, la remontée et l'envoie du message
-		Post(new sendMessageToBoat(artefactFeatures, artefactInit, this), getCurrentLogicalDate().add(LogicalDuration.ofMinutes(delay)));
+		if (myQ.size() == 0) {
+			lastLogicalDateTime =  getCurrentLogicalDate().add(LogicalDuration.ofMinutes(delay));
+			Post(new sendMessageToBoat(artefactFeatures, artefactInit, this), lastLogicalDateTime);
+		}
+		else {
+			lastLogicalDateTime = lastLogicalDateTime.add(LogicalDuration.ofMinutes(delay));
+			Post(new sendMessageToBoat(artefactFeatures, artefactInit, this), lastLogicalDateTime);
+		}
+		myQ.add(lastLogicalDateTime);
 	}
 	
 	
